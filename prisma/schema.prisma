@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  DISPATCHER
+  DRIVER
+}
+
+enum DeliveryStatus {
+  PENDING
+  DELIVERED
+  FAILED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  role      Role     @default(DRIVER)
+  
+  // Relationships
+  vehicle   Vehicle?  
+  routes    Route[]   // A user can have many historical routes
+}
+
+model Vehicle {
+  id           String @id @default(uuid())
+  licensePlate String @unique
+  model        String
+  
+  // 1-to-1 Relationship with User (Driver)
+  driverId     String @unique
+  driver       User   @relation(fields: [driverId], references: [id])
+}
+
+model Route {
+  id          String   @id @default(uuid())
+  date        DateTime @default(now())
+  isCompleted Boolean  @default(false)
+  
+  // 1-to-Many: A Route belongs to ONE Driver
+  driverId    String
+  driver      User     @relation(fields: [driverId], references: [id])
+  
+  // 1-to-Many: A Route contains MANY Deliveries
+  deliveries  Delivery[]
+}
+
+model Delivery {
+  id          String         @id @default(uuid())
+  address     String
+  latitude    Float
+  longitude   Float
+  status      DeliveryStatus @default(PENDING)
+  customerName String
+  
+  // 1-to-Many: A Delivery belongs to ONE Route
+  routeId     String
+  route       Route          @relation(fields: [routeId], references: [id], onDelete: Cascade)
+}
