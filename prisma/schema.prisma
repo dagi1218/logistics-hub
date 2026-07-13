@@ -1,11 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  output   = "./generated"
 }
 
 datasource db {
@@ -30,14 +25,14 @@ model User {
   role      Role     @default(DRIVER)
   
   // Relationships
-  vehicle   Vehicle?  
+  vehicle   Vehicle?  // The '?' means a user might not have a vehicle yet
   routes    Route[]   // A user can have many historical routes
 }
 
 model Vehicle {
   id           String @id @default(uuid())
   licensePlate String @unique
-  model        String
+  model        String // e.g., "Ford Transit"
   
   // 1-to-1 Relationship with User (Driver)
   driverId     String @unique
