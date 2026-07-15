@@ -23,6 +23,8 @@ model User {
   email     String   @unique
   name      String
   role      Role     @default(DRIVER)
+  currentLat    Float?     
+  currentLng    Float?
   
   // Relationships
   vehicle   Vehicle?  // The '?' means a user might not have a vehicle yet
