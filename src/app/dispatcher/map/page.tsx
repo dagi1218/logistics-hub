@@ -3,43 +3,83 @@ import React from "react";
 import { prisma } from "../../../lib/prisma";
 import MapWrapper from "../../../components/MapWrapper"; // Standard import!
 
+
+
+// 1. Helper function to fetch real-world road paths from OSRM
+async function getRoadPath(
+  deliveries: { latitude: number; longitude: number }[]
+): Promise<[number, number][]> {
+  if (deliveries.length < 2) return [];
+
+  try {
+    // OSRM expects: longitude,latitude;longitude,latitude
+    const coordsString = deliveries
+      .map((d) => `${d.longitude},${d.latitude}`)
+      .join(";");
+
+    const url = `https://router.project-osrm.org/route/v1/driving/${coordsString}?overview=full&geometries=geojson`;
+
+    // Fetch the road path. Next.js automatically caches this so we don't spam the API!
+    const res = await fetch(url, {
+      next: { revalidate: 3600 }, // Cache the route coordinates for 1 hour
+    });
+
+    if (!res.ok) throw new Error("OSRM routing request failed");
+
+    const data = await res.json();
+
+    if (data.code === "Ok" && data.routes?.[0]?.geometry?.coordinates) {
+      // OSRM returns [longitude, latitude]. Leaflet needs [latitude, longitude].
+      return data.routes[0].geometry.coordinates.map((coord: [number, number]) => [
+        coord[1], // Latitude
+        coord[0], // Longitude
+      ]);
+    }
+  } catch (error) {
+    console.error("⚠️ Routing Engine failed. Falling back to straight lines:", error);
+  }
+
+  // Fallback: If OSRM is down, connect the points with straight lines
+  return deliveries.map((d) => [d.latitude, d.longitude]);
+}
+
 export default async function MapDashboardPage() {
-  // 1. Fetch active routes, including their driver and deliveries sorted by sequence
+  // Fetch active routes
   const activeRoutes = await prisma.route.findMany({
-    where: {
-      isCompleted: false,
-    },
+    where: { isCompleted: false },
     include: {
       driver: true,
-      deliveries: {
-        orderBy: {
-          id: "asc", // Assumes creation order represents the delivery sequence
-        },
-      },
+      deliveries: { orderBy: { id: "asc" } },
     },
   });
 
-  // 2. Format the data to pass down to our Map wrapper
-  const routesData = activeRoutes.map((route, index) => {
-    // Assign a distinct stroke color to each driver's path
+  // 2. Fetch road paths concurrently using Promise.all to prevent bottlenecks
+  const routesPromises = activeRoutes.map(async (route, index) => {
     const routeColors = ["#3b82f6", "#10b981", "#f59e0b", "#ef4444"];
     const strokeColor = routeColors[index % routeColors.length];
+
+    const deliveriesData = route.deliveries.map((delivery) => ({
+      id: delivery.id,
+      customerName: delivery.customerName,
+      address: delivery.address,
+      latitude: delivery.latitude,
+      longitude: delivery.longitude,
+      status: delivery.status,
+    }));
+
+    // Get real-world driving coordinates!
+    const roadPath = await getRoadPath(deliveriesData);
 
     return {
       id: route.id,
       driverName: route.driver.name,
       strokeColor: strokeColor,
-      // Map the ordered deliveries for this specific route
-      deliveries: route.deliveries.map((delivery) => ({
-        id: delivery.id,
-        customerName: delivery.customerName,
-        address: delivery.address,
-        latitude: delivery.latitude,
-        longitude: delivery.longitude,
-        status: delivery.status,
-      })),
+      deliveries: deliveriesData,
+      roadPath: roadPath, // Passing the real-world road coordinates
     };
   });
+
+  const routesData = await Promise.all(routesPromises);
 
   return (
     <div className="space-y-6">
@@ -49,12 +89,11 @@ export default async function MapDashboardPage() {
             Live Fleet Map
           </h1>
           <p className="text-sm text-zinc-500">
-            Real-time visual route paths for active dispatches in Addis Ababa.
+            Real-world road-snapped coordinates via OpenStreetMap for Addis Ababa.
           </p>
         </div>
       </div>
 
-      {/* 3. Pass the structured routes to the wrapper */}
       <MapWrapper routes={routesData} />
       
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

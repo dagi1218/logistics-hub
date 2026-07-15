@@ -28,6 +28,7 @@ interface Route {
   driverName: string;
   strokeColor: string;
   deliveries: Delivery[];
+  roadPath: [number, number][]; 
 }
 
 interface LiveMapProps {
@@ -35,7 +36,6 @@ interface LiveMapProps {
 }
 
 export default function LiveMap({ routes }: LiveMapProps) {
-  // Center map on Addis Ababa (Bole Area / Stadium center)
   const addisCenter: [number, number] = [9.0222, 38.7468];
 
   return (
@@ -51,58 +51,50 @@ export default function LiveMap({ routes }: LiveMapProps) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {routes.map((route) => {
-          // Extract ordered coordinates arrays [ [lat, lng], [lat, lng] ] for the polyline
-          const pathCoordinates: [number, number][] = route.deliveries.map((del) => [
-            del.latitude,
-            del.longitude,
-          ]);
+        {routes.map((route) => (
+          <React.Fragment key={route.id}>
+            {/* Draw the smooth real-world road lines! */}
+            {route.roadPath.length > 0 && (
+              <Polyline
+                positions={route.roadPath} // Connects road network nodes perfectly
+                pathOptions={{
+                  color: route.strokeColor,
+                  weight: 4,
+                  opacity: 0.8,
+                  dashArray: "2, 6", // Clean, tight dashed look
+                }}
+              />
+            )}
 
-          return (
-            <React.Fragment key={route.id}>
-              {/* 1. Draw the vector path line connecting the driver's deliveries */}
-              {pathCoordinates.length > 1 && (
-                <Polyline
-                  positions={pathCoordinates}
-                  pathOptions={{
-                    color: route.strokeColor,
-                    weight: 4,
-                    opacity: 0.75,
-                    dashArray: "8, 8", // Creates a dashed "driving path" visual effect
-                  }}
-                />
-              )}
-
-              {/* 2. Plot individual delivery drop-off markers */}
-              {route.deliveries.map((delivery) => (
-                <Marker 
-                  key={delivery.id} 
-                  position={[delivery.latitude, delivery.longitude]} 
-                  icon={defaultIcon}
-                >
-                  <Popup>
-                    <div className="p-1">
-                      <p className="font-bold text-zinc-900 mb-0.5">{delivery.customerName}</p>
-                      <p className="text-xs text-zinc-500 mb-2">{delivery.address}</p>
-                      <div className="flex items-center justify-between gap-4 mt-2 pt-2 border-t border-zinc-100">
-                        <span className="text-xs font-semibold text-zinc-600 flex items-center gap-1">
-                          👤 {route.driverName}
-                        </span>
-                        <span className={`text-[10px] tracking-wider font-bold px-2 py-0.5 rounded-sm ${
-                          delivery.status === 'DELIVERED' ? 'bg-emerald-100 text-emerald-700' :
-                          delivery.status === 'PENDING' ? 'bg-amber-100 text-amber-700' :
-                          'bg-red-100 text-red-700'
-                        }`}>
-                          {delivery.status}
-                        </span>
-                      </div>
+            {/* Plot markers */}
+            {route.deliveries.map((delivery) => (
+              <Marker 
+                key={delivery.id} 
+                position={[delivery.latitude, delivery.longitude]} 
+                icon={defaultIcon}
+              >
+                <Popup>
+                  <div className="p-1">
+                    <p className="font-bold text-zinc-900 mb-0.5">{delivery.customerName}</p>
+                    <p className="text-xs text-zinc-500 mb-2">{delivery.address}</p>
+                    <div className="flex items-center justify-between gap-4 mt-2 pt-2 border-t border-zinc-100">
+                      <span className="text-xs font-semibold text-zinc-600">
+                        👤 {route.driverName}
+                      </span>
+                      <span className={`text-[10px] tracking-wider font-bold px-2 py-0.5 rounded-sm ${
+                        delivery.status === 'DELIVERED' ? 'bg-emerald-100 text-emerald-700' :
+                        delivery.status === 'PENDING' ? 'bg-amber-100 text-amber-700' :
+                        'bg-red-100 text-red-700'
+                      }`}>
+                        {delivery.status}
+                      </span>
                     </div>
-                  </Popup>
-                </Marker>
-              ))}
-            </React.Fragment>
-          );
-        })}
+                  </div>
+                </Popup>
+              </Marker>
+            ))}
+          </React.Fragment>
+        ))}
       </MapContainer>
     </div>
   );

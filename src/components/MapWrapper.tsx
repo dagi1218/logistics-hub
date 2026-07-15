@@ -8,7 +8,7 @@ const DynamicMap = dynamic(() => import("./LiveMap"), {
   ssr: false,
   loading: () => (
     <div className="h-[600px] w-full rounded-2xl bg-zinc-100 animate-pulse border border-zinc-200 flex items-center justify-center">
-      <span className="text-zinc-400 font-medium text-sm">Initializing vector map layer...</span>
+      <span className="text-zinc-400 font-medium text-sm">Querying OSRM road networks...</span>
     </div>
   ),
 });
@@ -27,6 +27,7 @@ interface Route {
   driverName: string;
   strokeColor: string;
   deliveries: Delivery[];
+  roadPath: [number, number][]; // <-- Add this
 }
 
 export default function MapWrapper({ routes }: { routes: Route[] }) {
