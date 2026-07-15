@@ -20,8 +20,20 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
+}
+
+export type UserAvgAggregateOutputType = {
+  currentLat: number | null
+  currentLng: number | null
+}
+
+export type UserSumAggregateOutputType = {
+  currentLat: number | null
+  currentLng: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -29,6 +41,8 @@ export type UserMinAggregateOutputType = {
   email: string | null
   name: string | null
   role: $Enums.Role | null
+  currentLat: number | null
+  currentLng: number | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -36,6 +50,8 @@ export type UserMaxAggregateOutputType = {
   email: string | null
   name: string | null
   role: $Enums.Role | null
+  currentLat: number | null
+  currentLng: number | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -43,15 +59,29 @@ export type UserCountAggregateOutputType = {
   email: number
   name: number
   role: number
+  currentLat: number
+  currentLng: number
   _all: number
 }
 
+
+export type UserAvgAggregateInputType = {
+  currentLat?: true
+  currentLng?: true
+}
+
+export type UserSumAggregateInputType = {
+  currentLat?: true
+  currentLng?: true
+}
 
 export type UserMinAggregateInputType = {
   id?: true
   email?: true
   name?: true
   role?: true
+  currentLat?: true
+  currentLng?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -59,6 +89,8 @@ export type UserMaxAggregateInputType = {
   email?: true
   name?: true
   role?: true
+  currentLat?: true
+  currentLng?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -66,6 +98,8 @@ export type UserCountAggregateInputType = {
   email?: true
   name?: true
   role?: true
+  currentLat?: true
+  currentLng?: true
   _all?: true
 }
 
@@ -107,6 +141,18 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -137,6 +183,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
+  _avg?: UserAvgAggregateInputType
+  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
@@ -146,7 +194,11 @@ export type UserGroupByOutputType = {
   email: string
   name: string
   role: $Enums.Role
+  currentLat: number | null
+  currentLng: number | null
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -174,6 +226,8 @@ export type UserWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
+  currentLat?: Prisma.FloatNullableFilter<"User"> | number | null
+  currentLng?: Prisma.FloatNullableFilter<"User"> | number | null
   vehicle?: Prisma.XOR<Prisma.VehicleNullableScalarRelationFilter, Prisma.VehicleWhereInput> | null
   routes?: Prisma.RouteListRelationFilter
 }
@@ -183,6 +237,8 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  currentLat?: Prisma.SortOrderInput | Prisma.SortOrder
+  currentLng?: Prisma.SortOrderInput | Prisma.SortOrder
   vehicle?: Prisma.VehicleOrderByWithRelationInput
   routes?: Prisma.RouteOrderByRelationAggregateInput
 }
@@ -195,6 +251,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   name?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
+  currentLat?: Prisma.FloatNullableFilter<"User"> | number | null
+  currentLng?: Prisma.FloatNullableFilter<"User"> | number | null
   vehicle?: Prisma.XOR<Prisma.VehicleNullableScalarRelationFilter, Prisma.VehicleWhereInput> | null
   routes?: Prisma.RouteListRelationFilter
 }, "id" | "email">
@@ -204,9 +262,13 @@ export type UserOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  currentLat?: Prisma.SortOrderInput | Prisma.SortOrder
+  currentLng?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
+  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
+  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -217,6 +279,8 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
+  currentLat?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
+  currentLng?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
 }
 
 export type UserCreateInput = {
@@ -224,6 +288,8 @@ export type UserCreateInput = {
   email: string
   name: string
   role?: $Enums.Role
+  currentLat?: number | null
+  currentLng?: number | null
   vehicle?: Prisma.VehicleCreateNestedOneWithoutDriverInput
   routes?: Prisma.RouteCreateNestedManyWithoutDriverInput
 }
@@ -233,6 +299,8 @@ export type UserUncheckedCreateInput = {
   email: string
   name: string
   role?: $Enums.Role
+  currentLat?: number | null
+  currentLng?: number | null
   vehicle?: Prisma.VehicleUncheckedCreateNestedOneWithoutDriverInput
   routes?: Prisma.RouteUncheckedCreateNestedManyWithoutDriverInput
 }
@@ -242,6 +310,8 @@ export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  currentLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  currentLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   vehicle?: Prisma.VehicleUpdateOneWithoutDriverNestedInput
   routes?: Prisma.RouteUpdateManyWithoutDriverNestedInput
 }
@@ -251,6 +321,8 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  currentLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  currentLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   vehicle?: Prisma.VehicleUncheckedUpdateOneWithoutDriverNestedInput
   routes?: Prisma.RouteUncheckedUpdateManyWithoutDriverNestedInput
 }
@@ -260,6 +332,8 @@ export type UserCreateManyInput = {
   email: string
   name: string
   role?: $Enums.Role
+  currentLat?: number | null
+  currentLng?: number | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -267,6 +341,8 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  currentLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  currentLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -274,6 +350,8 @@ export type UserUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  currentLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  currentLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -281,6 +359,13 @@ export type UserCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  currentLat?: Prisma.SortOrder
+  currentLng?: Prisma.SortOrder
+}
+
+export type UserAvgOrderByAggregateInput = {
+  currentLat?: Prisma.SortOrder
+  currentLng?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -288,6 +373,8 @@ export type UserMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  currentLat?: Prisma.SortOrder
+  currentLng?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -295,6 +382,13 @@ export type UserMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  currentLat?: Prisma.SortOrder
+  currentLng?: Prisma.SortOrder
+}
+
+export type UserSumOrderByAggregateInput = {
+  currentLat?: Prisma.SortOrder
+  currentLng?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -308,6 +402,14 @@ export type StringFieldUpdateOperationsInput = {
 
 export type EnumRoleFieldUpdateOperationsInput = {
   set?: $Enums.Role
+}
+
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type UserCreateNestedOneWithoutVehicleInput = {
@@ -343,6 +445,8 @@ export type UserCreateWithoutVehicleInput = {
   email: string
   name: string
   role?: $Enums.Role
+  currentLat?: number | null
+  currentLng?: number | null
   routes?: Prisma.RouteCreateNestedManyWithoutDriverInput
 }
 
@@ -351,6 +455,8 @@ export type UserUncheckedCreateWithoutVehicleInput = {
   email: string
   name: string
   role?: $Enums.Role
+  currentLat?: number | null
+  currentLng?: number | null
   routes?: Prisma.RouteUncheckedCreateNestedManyWithoutDriverInput
 }
 
@@ -375,6 +481,8 @@ export type UserUpdateWithoutVehicleInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  currentLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  currentLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   routes?: Prisma.RouteUpdateManyWithoutDriverNestedInput
 }
 
@@ -383,6 +491,8 @@ export type UserUncheckedUpdateWithoutVehicleInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  currentLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  currentLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   routes?: Prisma.RouteUncheckedUpdateManyWithoutDriverNestedInput
 }
 
@@ -391,6 +501,8 @@ export type UserCreateWithoutRoutesInput = {
   email: string
   name: string
   role?: $Enums.Role
+  currentLat?: number | null
+  currentLng?: number | null
   vehicle?: Prisma.VehicleCreateNestedOneWithoutDriverInput
 }
 
@@ -399,6 +511,8 @@ export type UserUncheckedCreateWithoutRoutesInput = {
   email: string
   name: string
   role?: $Enums.Role
+  currentLat?: number | null
+  currentLng?: number | null
   vehicle?: Prisma.VehicleUncheckedCreateNestedOneWithoutDriverInput
 }
 
@@ -423,6 +537,8 @@ export type UserUpdateWithoutRoutesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  currentLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  currentLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   vehicle?: Prisma.VehicleUpdateOneWithoutDriverNestedInput
 }
 
@@ -431,6 +547,8 @@ export type UserUncheckedUpdateWithoutRoutesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  currentLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  currentLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   vehicle?: Prisma.VehicleUncheckedUpdateOneWithoutDriverNestedInput
 }
 
@@ -470,6 +588,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   email?: boolean
   name?: boolean
   role?: boolean
+  currentLat?: boolean
+  currentLng?: boolean
   vehicle?: boolean | Prisma.User$vehicleArgs<ExtArgs>
   routes?: boolean | Prisma.User$routesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -480,6 +600,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   name?: boolean
   role?: boolean
+  currentLat?: boolean
+  currentLng?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -487,6 +609,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   name?: boolean
   role?: boolean
+  currentLat?: boolean
+  currentLng?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -494,9 +618,11 @@ export type UserSelectScalar = {
   email?: boolean
   name?: boolean
   role?: boolean
+  currentLat?: boolean
+  currentLng?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "role", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "role" | "currentLat" | "currentLng", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   vehicle?: boolean | Prisma.User$vehicleArgs<ExtArgs>
   routes?: boolean | Prisma.User$routesArgs<ExtArgs>
@@ -516,6 +642,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     email: string
     name: string
     role: $Enums.Role
+    currentLat: number | null
+    currentLng: number | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -945,6 +1073,8 @@ export interface UserFieldRefs {
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'Role'>
+  readonly currentLat: Prisma.FieldRef<"User", 'Float'>
+  readonly currentLng: Prisma.FieldRef<"User", 'Float'>
 }
     
 

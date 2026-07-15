@@ -25,3 +25,25 @@ export async function updateDeliveryStatus(deliveryId: string, newStatus: Delive
     return { success: false, error: "Failed to update delivery status" };
   }
 }
+
+
+export async function updateDriverLocation(driverId: string, lat: number, lng: number) {
+  try {
+    // 1. Update the driver's current coordinates in the database
+    await prisma.user.update({
+      where: { id: driverId },
+      data: { 
+        currentLat: lat, 
+        currentLng: lng 
+      },
+    });
+
+    // 2. Instantly refresh the Dispatcher Map so the truck icon moves!
+    revalidatePath("/dispatcher/map");
+
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to update driver location:", error);
+    return { success: false, error: "Failed to update location" };
+  }
+}
