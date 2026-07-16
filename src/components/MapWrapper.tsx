@@ -25,6 +25,8 @@ interface Delivery {
 interface Route {
   id: string;
   driverName: string;
+  driverId: string;
+  driverLocation: [number, number];
   strokeColor: string;
   deliveries: Delivery[];
   roadPath: [number, number][]; // <-- Add this

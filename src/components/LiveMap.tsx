@@ -26,6 +26,8 @@ interface Delivery {
 interface Route {
   id: string;
   driverName: string;
+  driverId: string;
+  driverLocation: [number, number];
   strokeColor: string;
   deliveries: Delivery[];
   roadPath: [number, number][]; 
@@ -34,6 +36,15 @@ interface Route {
 interface LiveMapProps {
   routes: Route[];
 }
+
+// create per-route truck icon instances (avoids marker reuse/render issues)
+const createTruckIcon = (url = "/truck.png") =>
+  L.icon({
+    iconUrl: url,
+    iconSize: [32, 32],
+    // anchor bottom-center so the icon points to the location
+    iconAnchor: [16, 32],
+  });
 
 export default function LiveMap({ routes }: LiveMapProps) {
   const addisCenter: [number, number] = [9.0222, 38.7468];
@@ -92,7 +103,25 @@ export default function LiveMap({ routes }: LiveMapProps) {
                   </div>
                 </Popup>
               </Marker>
+
+              
+
+              
             ))}
+
+            {/* Plot the driver's current location */}  
+            <Marker
+              key={route.driverId}
+              position={route.driverLocation}
+              icon={createTruckIcon()}
+            >
+    <Popup>
+      <div className="font-sans">
+        <p className="font-bold text-zinc-900">{route.driverName}</p>
+        <p className="text-xs text-zinc-500">Active Unit</p>
+      </div>
+    </Popup>
+  </Marker>
           </React.Fragment>
         ))}
       </MapContainer>

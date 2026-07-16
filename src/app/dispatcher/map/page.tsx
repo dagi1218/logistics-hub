@@ -1,8 +1,9 @@
 // src/app/dispatcher/map/page.tsx
 import React from "react";
 import { prisma } from "../../../lib/prisma";
-import MapWrapper from "../../../components/MapWrapper"; // Standard import!
-import { getRoadPath } from "../../../lib/routing"; // Import the helper function
+import MapWrapper from "../../../components/MapWrapper"; 
+import { getRoadPath } from "../../../lib/routing"; 
+import LiveTracker from "../../../components/LiveTracker";
 
 
 
@@ -37,6 +38,9 @@ export default async function MapDashboardPage() {
     return {
       id: route.id,
       driverName: route.driver.name,
+      driverId: route.driverId,
+      // Ensure a fixed tuple [number, number] for typing — fallback to 0 if null
+      driverLocation: [route.driver.currentLat ?? 0, route.driver.currentLng ?? 0] as [number, number],
       strokeColor: strokeColor,
       deliveries: deliveriesData,
       roadPath: roadPath, // Passing the real-world road coordinates
@@ -47,6 +51,7 @@ export default async function MapDashboardPage() {
 
   return (
     <div className="space-y-6">
+      <LiveTracker intervalMs={2000} />
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
@@ -57,6 +62,8 @@ export default async function MapDashboardPage() {
           </p>
         </div>
       </div>
+
+      
 
       <MapWrapper routes={routesData} />
       
