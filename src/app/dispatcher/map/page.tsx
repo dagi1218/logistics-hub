@@ -1,8 +1,9 @@
 // src/app/dispatcher/map/page.tsx
 import React from "react";
 import { prisma } from "../../../lib/prisma";
-import MapWrapper from "../../../components/MapWrapper"; 
-import { getRoadPath } from "../../../lib/routing"; 
+import MapWrapper from "../../../components/MapWrapper";
+import OptimizeRouteButton from "../../../components/OptimizeRouteButton";
+import { getRoadPath } from "../../../lib/routing";
 import LiveTracker from "../../../components/LiveTracker";
 
 
@@ -14,7 +15,7 @@ export default async function MapDashboardPage() {
     where: { isCompleted: false },
     include: {
       driver: true,
-      deliveries: { orderBy: { id: "asc" } },
+      deliveries: { orderBy: { sequenceOrder: "asc" } },
     },
   });
 
@@ -71,18 +72,21 @@ export default async function MapDashboardPage() {
         {routesData.map((route) => (
           <div 
             key={route.id} 
-            className="bg-white p-4 rounded-xl border border-zinc-200 text-sm flex items-center justify-between shadow-xs"
+            className="bg-white p-4 rounded-xl border border-zinc-200 text-sm shadow-xs"
           >
-            <div className="flex items-center gap-3">
-              <span 
-                className="w-3.5 h-3.5 rounded-full border border-white shadow-xs" 
-                style={{ backgroundColor: route.strokeColor }}
-              />
-              <span className="font-semibold text-zinc-700">{route.driverName}</span>
+            <div className="flex items-start justify-between gap-4 mb-4">
+              <div className="flex items-center gap-3">
+                <span 
+                  className="w-3.5 h-3.5 rounded-full border border-white shadow-xs" 
+                  style={{ backgroundColor: route.strokeColor }}
+                />
+                <div>
+                  <p className="font-semibold text-zinc-700">{route.driverName}</p>
+                  <p className="text-xs text-zinc-500">{route.deliveries.length} drops</p>
+                </div>
+              </div>
+              <OptimizeRouteButton routeId={route.id} />
             </div>
-            <span className="text-xs bg-zinc-100 text-zinc-500 px-2 py-0.5 rounded-md font-mono">
-              {route.deliveries.length} drops
-            </span>
           </div>
         ))}
       </div>

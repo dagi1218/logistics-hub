@@ -62,10 +62,13 @@ export default function LiveMap({ routes }: LiveMapProps) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {routes.map((route) => (
-          <React.Fragment key={route.id}>
-            {/* Draw the smooth real-world road lines! */}
-            {route.roadPath.length > 0 && (
+        {routes.map((route) => {
+          const routeLayerKey = `${route.id}-${route.deliveries.map((delivery) => delivery.id).join("-")}`;
+
+          return (
+            <React.Fragment key={routeLayerKey}>
+              {/* Draw the smooth real-world road lines! */}
+              {route.roadPath.length > 0 && (
               <Polyline
                 positions={route.roadPath} // Connects road network nodes perfectly
                 pathOptions={{
@@ -109,21 +112,22 @@ export default function LiveMap({ routes }: LiveMapProps) {
               
             ))}
 
-            {/* Plot the driver's current location */}  
-            <Marker
-              key={route.driverId}
-              position={route.driverLocation}
-              icon={createTruckIcon()}
-            >
-    <Popup>
-      <div className="font-sans">
-        <p className="font-bold text-zinc-900">{route.driverName}</p>
-        <p className="text-xs text-zinc-500">Active Unit</p>
-      </div>
-    </Popup>
-  </Marker>
-          </React.Fragment>
-        ))}
+              {/* Plot the driver's current location */}
+              <Marker
+                key={route.driverId}
+                position={route.driverLocation}
+                icon={createTruckIcon()}
+              >
+                <Popup>
+                  <div className="font-sans">
+                    <p className="font-bold text-zinc-900">{route.driverName}</p>
+                    <p className="text-xs text-zinc-500">Active Unit</p>
+                  </div>
+                </Popup>
+              </Marker>
+            </React.Fragment>
+          );
+        })}
       </MapContainer>
     </div>
   );

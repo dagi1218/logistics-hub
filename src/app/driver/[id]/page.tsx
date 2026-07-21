@@ -3,6 +3,7 @@ import React from "react";
 import { prisma } from "@/lib/prisma";
 import StatusButton from "@/components/StatusButton";
 import SimulationControl from "@/components/SimulationControl";
+import OptimizeRouteButton from "@/components/OptimizeRouteButton";
 import { getRoadPath } from "@/lib/routing";
 
 interface PageProps {
@@ -12,6 +13,7 @@ interface PageProps {
 export default async function DriverAppPage({ params }: PageProps) {
   const resolvedParams = await params;
   const driverId = resolvedParams.id;
+ 
 
   const activeRoute = await prisma.route.findFirst({
     where: {
@@ -23,7 +25,7 @@ export default async function DriverAppPage({ params }: PageProps) {
       deliveries: {
         orderBy: [
           { status: 'asc' },
-          { id: 'asc' }
+          { sequenceOrder: 'asc' }
         ],
       },
     },
@@ -52,9 +54,12 @@ export default async function DriverAppPage({ params }: PageProps) {
     <div className="max-w-md mx-auto bg-zinc-50 min-h-screen pb-20 space-y-4">
       {/* Header */}
       <div className="bg-zinc-900 text-white p-6 rounded-b-3xl shadow-md space-y-4">
-        <div>
+          <div>
           <p className="text-zinc-400 text-sm font-medium mb-1">Driver Portal</p>
-          <h1 className="text-2xl font-bold">Hello, {activeRoute.driver.name} 👋</h1>
+          <div className="flex flex-wrap items-center gap-3">
+            <h1 className="text-2xl font-bold">Hello, {activeRoute.driver.name} 👋</h1>
+            <OptimizeRouteButton routeId={activeRoute.id} />
+          </div>
           <p className="text-zinc-400 text-sm mt-1">
             {pendingCount} stops remaining today
           </p>

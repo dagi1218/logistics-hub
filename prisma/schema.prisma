@@ -60,6 +60,7 @@ model Delivery {
   latitude    Float
   longitude   Float
   status      DeliveryStatus @default(PENDING)
+  sequenceOrder Int           @default(0)
   customerName String
   
   // 1-to-Many: A Delivery belongs to ONE Route

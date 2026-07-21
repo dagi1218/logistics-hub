@@ -780,6 +780,7 @@ export const DeliveryScalarFieldEnum = {
   latitude: 'latitude',
   longitude: 'longitude',
   status: 'status',
+  sequenceOrder: 'sequenceOrder',
   customerName: 'customerName',
   routeId: 'routeId'
 } as const
