@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { updateDriverLocation } from "../app/actions/actions";
+import { updateDriverLocation } from "../app/actions/route";
 
 interface SimulationControlProps {
   driverId: string;

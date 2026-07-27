@@ -39,31 +39,31 @@ export type UserSumAggregateOutputType = {
 export type UserMinAggregateOutputType = {
   id: string | null
   email: string | null
-  password: string | null
   name: string | null
   role: $Enums.Role | null
   currentLat: number | null
   currentLng: number | null
+  password: string | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: string | null
   email: string | null
-  password: string | null
   name: string | null
   role: $Enums.Role | null
   currentLat: number | null
   currentLng: number | null
+  password: string | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
   email: number
-  password: number
   name: number
   role: number
   currentLat: number
   currentLng: number
+  password: number
   _all: number
 }
 
@@ -81,31 +81,31 @@ export type UserSumAggregateInputType = {
 export type UserMinAggregateInputType = {
   id?: true
   email?: true
-  password?: true
   name?: true
   role?: true
   currentLat?: true
   currentLng?: true
+  password?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
   email?: true
-  password?: true
   name?: true
   role?: true
   currentLat?: true
   currentLng?: true
+  password?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
   email?: true
-  password?: true
   name?: true
   role?: true
   currentLat?: true
   currentLng?: true
+  password?: true
   _all?: true
 }
 
@@ -198,11 +198,11 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type UserGroupByOutputType = {
   id: string
   email: string
-  password: string
   name: string
   role: $Enums.Role
   currentLat: number | null
   currentLng: number | null
+  password: string
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
   _sum: UserSumAggregateOutputType | null
@@ -231,25 +231,25 @@ export type UserWhereInput = {
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
-  password?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   currentLat?: Prisma.FloatNullableFilter<"User"> | number | null
   currentLng?: Prisma.FloatNullableFilter<"User"> | number | null
-  vehicle?: Prisma.XOR<Prisma.VehicleNullableScalarRelationFilter, Prisma.VehicleWhereInput> | null
+  password?: Prisma.StringFilter<"User"> | string
   routes?: Prisma.RouteListRelationFilter
+  vehicle?: Prisma.XOR<Prisma.VehicleNullableScalarRelationFilter, Prisma.VehicleWhereInput> | null
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  password?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
   currentLat?: Prisma.SortOrderInput | Prisma.SortOrder
   currentLng?: Prisma.SortOrderInput | Prisma.SortOrder
-  vehicle?: Prisma.VehicleOrderByWithRelationInput
+  password?: Prisma.SortOrder
   routes?: Prisma.RouteOrderByRelationAggregateInput
+  vehicle?: Prisma.VehicleOrderByWithRelationInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -258,23 +258,23 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  password?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   currentLat?: Prisma.FloatNullableFilter<"User"> | number | null
   currentLng?: Prisma.FloatNullableFilter<"User"> | number | null
-  vehicle?: Prisma.XOR<Prisma.VehicleNullableScalarRelationFilter, Prisma.VehicleWhereInput> | null
+  password?: Prisma.StringFilter<"User"> | string
   routes?: Prisma.RouteListRelationFilter
+  vehicle?: Prisma.XOR<Prisma.VehicleNullableScalarRelationFilter, Prisma.VehicleWhereInput> | null
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  password?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
   currentLat?: Prisma.SortOrderInput | Prisma.SortOrder
   currentLng?: Prisma.SortOrderInput | Prisma.SortOrder
+  password?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -288,99 +288,99 @@ export type UserScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
-  password?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   currentLat?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
   currentLng?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
+  password?: Prisma.StringWithAggregatesFilter<"User"> | string
 }
 
 export type UserCreateInput = {
   id?: string
   email: string
-  password: string
   name: string
   role?: $Enums.Role
   currentLat?: number | null
   currentLng?: number | null
-  vehicle?: Prisma.VehicleCreateNestedOneWithoutDriverInput
+  password?: string
   routes?: Prisma.RouteCreateNestedManyWithoutDriverInput
+  vehicle?: Prisma.VehicleCreateNestedOneWithoutDriverInput
 }
 
 export type UserUncheckedCreateInput = {
   id?: string
   email: string
-  password: string
   name: string
   role?: $Enums.Role
   currentLat?: number | null
   currentLng?: number | null
-  vehicle?: Prisma.VehicleUncheckedCreateNestedOneWithoutDriverInput
+  password?: string
   routes?: Prisma.RouteUncheckedCreateNestedManyWithoutDriverInput
+  vehicle?: Prisma.VehicleUncheckedCreateNestedOneWithoutDriverInput
 }
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   currentLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   currentLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  vehicle?: Prisma.VehicleUpdateOneWithoutDriverNestedInput
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   routes?: Prisma.RouteUpdateManyWithoutDriverNestedInput
+  vehicle?: Prisma.VehicleUpdateOneWithoutDriverNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   currentLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   currentLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  vehicle?: Prisma.VehicleUncheckedUpdateOneWithoutDriverNestedInput
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   routes?: Prisma.RouteUncheckedUpdateManyWithoutDriverNestedInput
+  vehicle?: Prisma.VehicleUncheckedUpdateOneWithoutDriverNestedInput
 }
 
 export type UserCreateManyInput = {
   id?: string
   email: string
-  password: string
   name: string
   role?: $Enums.Role
   currentLat?: number | null
   currentLng?: number | null
+  password?: string
 }
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   currentLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   currentLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   currentLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   currentLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  password?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
   currentLat?: Prisma.SortOrder
   currentLng?: Prisma.SortOrder
+  password?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
@@ -391,21 +391,21 @@ export type UserAvgOrderByAggregateInput = {
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  password?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
   currentLat?: Prisma.SortOrder
   currentLng?: Prisma.SortOrder
+  password?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  password?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
   currentLat?: Prisma.SortOrder
   currentLng?: Prisma.SortOrder
+  password?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
@@ -465,22 +465,22 @@ export type UserUpdateOneRequiredWithoutRoutesNestedInput = {
 export type UserCreateWithoutVehicleInput = {
   id?: string
   email: string
-  password: string
   name: string
   role?: $Enums.Role
   currentLat?: number | null
   currentLng?: number | null
+  password?: string
   routes?: Prisma.RouteCreateNestedManyWithoutDriverInput
 }
 
 export type UserUncheckedCreateWithoutVehicleInput = {
   id?: string
   email: string
-  password: string
   name: string
   role?: $Enums.Role
   currentLat?: number | null
   currentLng?: number | null
+  password?: string
   routes?: Prisma.RouteUncheckedCreateNestedManyWithoutDriverInput
 }
 
@@ -503,44 +503,44 @@ export type UserUpdateToOneWithWhereWithoutVehicleInput = {
 export type UserUpdateWithoutVehicleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   currentLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   currentLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   routes?: Prisma.RouteUpdateManyWithoutDriverNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVehicleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   currentLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   currentLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   routes?: Prisma.RouteUncheckedUpdateManyWithoutDriverNestedInput
 }
 
 export type UserCreateWithoutRoutesInput = {
   id?: string
   email: string
-  password: string
   name: string
   role?: $Enums.Role
   currentLat?: number | null
   currentLng?: number | null
+  password?: string
   vehicle?: Prisma.VehicleCreateNestedOneWithoutDriverInput
 }
 
 export type UserUncheckedCreateWithoutRoutesInput = {
   id?: string
   email: string
-  password: string
   name: string
   role?: $Enums.Role
   currentLat?: number | null
   currentLng?: number | null
+  password?: string
   vehicle?: Prisma.VehicleUncheckedCreateNestedOneWithoutDriverInput
 }
 
@@ -563,22 +563,22 @@ export type UserUpdateToOneWithWhereWithoutRoutesInput = {
 export type UserUpdateWithoutRoutesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   currentLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   currentLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   vehicle?: Prisma.VehicleUpdateOneWithoutDriverNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRoutesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   currentLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   currentLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   vehicle?: Prisma.VehicleUncheckedUpdateOneWithoutDriverNestedInput
 }
 
@@ -616,50 +616,50 @@ export type UserCountOutputTypeCountRoutesArgs<ExtArgs extends runtime.Types.Ext
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
-  password?: boolean
   name?: boolean
   role?: boolean
   currentLat?: boolean
   currentLng?: boolean
-  vehicle?: boolean | Prisma.User$vehicleArgs<ExtArgs>
+  password?: boolean
   routes?: boolean | Prisma.User$routesArgs<ExtArgs>
+  vehicle?: boolean | Prisma.User$vehicleArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
-  password?: boolean
   name?: boolean
   role?: boolean
   currentLat?: boolean
   currentLng?: boolean
+  password?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
-  password?: boolean
   name?: boolean
   role?: boolean
   currentLat?: boolean
   currentLng?: boolean
+  password?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
   email?: boolean
-  password?: boolean
   name?: boolean
   role?: boolean
   currentLat?: boolean
   currentLng?: boolean
+  password?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "name" | "role" | "currentLat" | "currentLng", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "role" | "currentLat" | "currentLng" | "password", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  vehicle?: boolean | Prisma.User$vehicleArgs<ExtArgs>
   routes?: boolean | Prisma.User$routesArgs<ExtArgs>
+  vehicle?: boolean | Prisma.User$vehicleArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -668,17 +668,17 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    vehicle: Prisma.$VehiclePayload<ExtArgs> | null
     routes: Prisma.$RoutePayload<ExtArgs>[]
+    vehicle: Prisma.$VehiclePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     email: string
-    password: string
     name: string
     role: $Enums.Role
     currentLat: number | null
     currentLng: number | null
+    password: string
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1073,8 +1073,8 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  vehicle<T extends Prisma.User$vehicleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$vehicleArgs<ExtArgs>>): Prisma.Prisma__VehicleClient<runtime.Types.Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   routes<T extends Prisma.User$routesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$routesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RoutePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  vehicle<T extends Prisma.User$vehicleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$vehicleArgs<ExtArgs>>): Prisma.Prisma__VehicleClient<runtime.Types.Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1106,11 +1106,11 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
-  readonly password: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'Role'>
   readonly currentLat: Prisma.FieldRef<"User", 'Float'>
   readonly currentLng: Prisma.FieldRef<"User", 'Float'>
+  readonly password: Prisma.FieldRef<"User", 'String'>
 }
     
 
@@ -1504,25 +1504,6 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * User.vehicle
- */
-export type User$vehicleArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Vehicle
-   */
-  select?: Prisma.VehicleSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Vehicle
-   */
-  omit?: Prisma.VehicleOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.VehicleInclude<ExtArgs> | null
-  where?: Prisma.VehicleWhereInput
-}
-
-/**
  * User.routes
  */
 export type User$routesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1544,6 +1525,25 @@ export type User$routesArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   distinct?: Prisma.RouteScalarFieldEnum | Prisma.RouteScalarFieldEnum[]
+}
+
+/**
+ * User.vehicle
+ */
+export type User$vehicleArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Vehicle
+   */
+  select?: Prisma.VehicleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Vehicle
+   */
+  omit?: Prisma.VehicleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VehicleInclude<ExtArgs> | null
+  where?: Prisma.VehicleWhereInput
 }
 
 /**

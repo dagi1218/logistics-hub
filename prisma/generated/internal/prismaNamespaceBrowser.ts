@@ -76,11 +76,11 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  password: 'password',
   name: 'name',
   role: 'role',
   currentLat: 'currentLat',
-  currentLng: 'currentLng'
+  currentLng: 'currentLng',
+  password: 'password'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -112,9 +112,9 @@ export const DeliveryScalarFieldEnum = {
   latitude: 'latitude',
   longitude: 'longitude',
   status: 'status',
-  sequenceOrder: 'sequenceOrder',
   customerName: 'customerName',
-  routeId: 'routeId'
+  routeId: 'routeId',
+  sequenceOrder: 'sequenceOrder'
 } as const
 
 export type DeliveryScalarFieldEnum = (typeof DeliveryScalarFieldEnum)[keyof typeof DeliveryScalarFieldEnum]

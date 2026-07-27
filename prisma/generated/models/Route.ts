@@ -174,8 +174,8 @@ export type RouteWhereInput = {
   date?: Prisma.DateTimeFilter<"Route"> | Date | string
   isCompleted?: Prisma.BoolFilter<"Route"> | boolean
   driverId?: Prisma.StringFilter<"Route"> | string
-  driver?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   deliveries?: Prisma.DeliveryListRelationFilter
+  driver?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type RouteOrderByWithRelationInput = {
@@ -183,8 +183,8 @@ export type RouteOrderByWithRelationInput = {
   date?: Prisma.SortOrder
   isCompleted?: Prisma.SortOrder
   driverId?: Prisma.SortOrder
-  driver?: Prisma.UserOrderByWithRelationInput
   deliveries?: Prisma.DeliveryOrderByRelationAggregateInput
+  driver?: Prisma.UserOrderByWithRelationInput
 }
 
 export type RouteWhereUniqueInput = Prisma.AtLeast<{
@@ -195,8 +195,8 @@ export type RouteWhereUniqueInput = Prisma.AtLeast<{
   date?: Prisma.DateTimeFilter<"Route"> | Date | string
   isCompleted?: Prisma.BoolFilter<"Route"> | boolean
   driverId?: Prisma.StringFilter<"Route"> | string
-  driver?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   deliveries?: Prisma.DeliveryListRelationFilter
+  driver?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type RouteOrderByWithAggregationInput = {
@@ -223,8 +223,8 @@ export type RouteCreateInput = {
   id?: string
   date?: Date | string
   isCompleted?: boolean
-  driver: Prisma.UserCreateNestedOneWithoutRoutesInput
   deliveries?: Prisma.DeliveryCreateNestedManyWithoutRouteInput
+  driver: Prisma.UserCreateNestedOneWithoutRoutesInput
 }
 
 export type RouteUncheckedCreateInput = {
@@ -239,8 +239,8 @@ export type RouteUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  driver?: Prisma.UserUpdateOneRequiredWithoutRoutesNestedInput
   deliveries?: Prisma.DeliveryUpdateManyWithoutRouteNestedInput
+  driver?: Prisma.UserUpdateOneRequiredWithoutRoutesNestedInput
 }
 
 export type RouteUncheckedUpdateInput = {
@@ -302,9 +302,9 @@ export type RouteMinOrderByAggregateInput = {
   driverId?: Prisma.SortOrder
 }
 
-export type RouteScalarRelationFilter = {
-  is?: Prisma.RouteWhereInput
-  isNot?: Prisma.RouteWhereInput
+export type RouteNullableScalarRelationFilter = {
+  is?: Prisma.RouteWhereInput | null
+  isNot?: Prisma.RouteWhereInput | null
 }
 
 export type RouteCreateNestedManyWithoutDriverInput = {
@@ -363,10 +363,12 @@ export type RouteCreateNestedOneWithoutDeliveriesInput = {
   connect?: Prisma.RouteWhereUniqueInput
 }
 
-export type RouteUpdateOneRequiredWithoutDeliveriesNestedInput = {
+export type RouteUpdateOneWithoutDeliveriesNestedInput = {
   create?: Prisma.XOR<Prisma.RouteCreateWithoutDeliveriesInput, Prisma.RouteUncheckedCreateWithoutDeliveriesInput>
   connectOrCreate?: Prisma.RouteCreateOrConnectWithoutDeliveriesInput
   upsert?: Prisma.RouteUpsertWithoutDeliveriesInput
+  disconnect?: Prisma.RouteWhereInput | boolean
+  delete?: Prisma.RouteWhereInput | boolean
   connect?: Prisma.RouteWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.RouteUpdateToOneWithWhereWithoutDeliveriesInput, Prisma.RouteUpdateWithoutDeliveriesInput>, Prisma.RouteUncheckedUpdateWithoutDeliveriesInput>
 }
@@ -527,8 +529,8 @@ export type RouteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   date?: boolean
   isCompleted?: boolean
   driverId?: boolean
-  driver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   deliveries?: boolean | Prisma.Route$deliveriesArgs<ExtArgs>
+  driver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.RouteCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["route"]>
 
@@ -557,8 +559,8 @@ export type RouteSelectScalar = {
 
 export type RouteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "date" | "isCompleted" | "driverId", ExtArgs["result"]["route"]>
 export type RouteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  driver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   deliveries?: boolean | Prisma.Route$deliveriesArgs<ExtArgs>
+  driver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.RouteCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type RouteIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -571,8 +573,8 @@ export type RouteIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type $RoutePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Route"
   objects: {
-    driver: Prisma.$UserPayload<ExtArgs>
     deliveries: Prisma.$DeliveryPayload<ExtArgs>[]
+    driver: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -973,8 +975,8 @@ readonly fields: RouteFieldRefs;
  */
 export interface Prisma__RouteClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  driver<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   deliveries<T extends Prisma.Route$deliveriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Route$deliveriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DeliveryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  driver<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

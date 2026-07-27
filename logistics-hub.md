@@ -107,9 +107,26 @@
 
 ## Future Directions
 
-- Add a delivery history / status timeline for customers.
-- Improve route rendering with multiple deliveries and optimized stop sequence.
+### Customer and Driver Experience
+
+- Add a delivery history and status timeline for customers.
+- Improve route rendering for multiple deliveries and optimized stop sequencing.
+- Track driver ETA and arrival notifications for customer-facing pages.
+- Expand the mobile driver experience with offline support, proof-of-delivery capture, and quick status updates.
+
+### Dispatcher Perspective
+
+- Build a more complete dispatcher control center with a live overview of active routes, delayed deliveries, and fleet health.
+- Add drag-and-drop delivery reassignment so dispatchers can quickly reassign stops to available drivers.
+- Introduce automated dispatch recommendations based on driver proximity, route load, current traffic, and delivery priority.
+- Add exception handling tools for dispatchers, including late-delivery alerts, missed-stop detection, and manual rerouting.
+- Provide bulk actions for updating delivery statuses, changing priorities, and communicating with drivers or customers.
+- Create a dispatcher dashboard for key KPIs such as on-time performance, route completion rate, vehicle utilization, and SLA compliance.
+- Support dispatchers with “next best action” suggestions, such as sending a driver to an urgent delivery or rebalancing workload across the fleet.
+
+### Platform and Reliability
+
 - Add authentication and role-based access for dispatcher, driver, and customer views.
 - Add better fallback handling when OSRM routing fails.
 - Add unit tests for route generation, server actions, and map rendering.
-- Track driver ETA and arrival notifications for customer-facing pages.
+- Improve scalability with caching, background job processing, and better monitoring for real-time tracking.

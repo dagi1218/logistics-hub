@@ -3,6 +3,7 @@ import React from "react";
 import { prisma } from "../../../lib/prisma";
 import { DeliveryStatus } from "../../../../prisma/generated/client";
 import SearchBar from "../../../components/SearchBar";
+import CreateDeliveryModal from "../../../components/CreateDeliveryModal";
 
 // Next.js automatically passes URL search parameters as a Promise to page components
 interface PageProps {
@@ -53,7 +54,7 @@ export default async function DeliveriesPage({ searchParams }: PageProps) {
             Search and filter all fleet deliveries across Addis Ababa.
           </p>
         </div>
-        
+        <CreateDeliveryModal />
         {/* Placeholder for our Search Bar Component */}
         <SearchBar />
       </div>
@@ -86,7 +87,7 @@ export default async function DeliveriesPage({ searchParams }: PageProps) {
                     {delivery.address}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-500">
-                    {delivery.route.driver.name}
+                    {delivery.route?.driver.name}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
                     <span className={`px-2.5 py-1 rounded-full text-xs font-medium border ${

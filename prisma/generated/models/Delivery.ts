@@ -44,9 +44,9 @@ export type DeliveryMinAggregateOutputType = {
   latitude: number | null
   longitude: number | null
   status: $Enums.DeliveryStatus | null
-  sequenceOrder: number | null
   customerName: string | null
   routeId: string | null
+  sequenceOrder: number | null
 }
 
 export type DeliveryMaxAggregateOutputType = {
@@ -55,9 +55,9 @@ export type DeliveryMaxAggregateOutputType = {
   latitude: number | null
   longitude: number | null
   status: $Enums.DeliveryStatus | null
-  sequenceOrder: number | null
   customerName: string | null
   routeId: string | null
+  sequenceOrder: number | null
 }
 
 export type DeliveryCountAggregateOutputType = {
@@ -66,9 +66,9 @@ export type DeliveryCountAggregateOutputType = {
   latitude: number
   longitude: number
   status: number
-  sequenceOrder: number
   customerName: number
   routeId: number
+  sequenceOrder: number
   _all: number
 }
 
@@ -91,9 +91,9 @@ export type DeliveryMinAggregateInputType = {
   latitude?: true
   longitude?: true
   status?: true
-  sequenceOrder?: true
   customerName?: true
   routeId?: true
+  sequenceOrder?: true
 }
 
 export type DeliveryMaxAggregateInputType = {
@@ -102,9 +102,9 @@ export type DeliveryMaxAggregateInputType = {
   latitude?: true
   longitude?: true
   status?: true
-  sequenceOrder?: true
   customerName?: true
   routeId?: true
+  sequenceOrder?: true
 }
 
 export type DeliveryCountAggregateInputType = {
@@ -113,9 +113,9 @@ export type DeliveryCountAggregateInputType = {
   latitude?: true
   longitude?: true
   status?: true
-  sequenceOrder?: true
   customerName?: true
   routeId?: true
+  sequenceOrder?: true
   _all?: true
 }
 
@@ -211,9 +211,9 @@ export type DeliveryGroupByOutputType = {
   latitude: number
   longitude: number
   status: $Enums.DeliveryStatus
-  sequenceOrder: number
   customerName: string
-  routeId: string
+  routeId: string | null
+  sequenceOrder: number
   _count: DeliveryCountAggregateOutputType | null
   _avg: DeliveryAvgAggregateOutputType | null
   _sum: DeliverySumAggregateOutputType | null
@@ -245,10 +245,10 @@ export type DeliveryWhereInput = {
   latitude?: Prisma.FloatFilter<"Delivery"> | number
   longitude?: Prisma.FloatFilter<"Delivery"> | number
   status?: Prisma.EnumDeliveryStatusFilter<"Delivery"> | $Enums.DeliveryStatus
-  sequenceOrder?: Prisma.IntFilter<"Delivery"> | number
   customerName?: Prisma.StringFilter<"Delivery"> | string
-  routeId?: Prisma.StringFilter<"Delivery"> | string
-  route?: Prisma.XOR<Prisma.RouteScalarRelationFilter, Prisma.RouteWhereInput>
+  routeId?: Prisma.StringNullableFilter<"Delivery"> | string | null
+  sequenceOrder?: Prisma.IntFilter<"Delivery"> | number
+  route?: Prisma.XOR<Prisma.RouteNullableScalarRelationFilter, Prisma.RouteWhereInput> | null
 }
 
 export type DeliveryOrderByWithRelationInput = {
@@ -257,9 +257,9 @@ export type DeliveryOrderByWithRelationInput = {
   latitude?: Prisma.SortOrder
   longitude?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  sequenceOrder?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
-  routeId?: Prisma.SortOrder
+  routeId?: Prisma.SortOrderInput | Prisma.SortOrder
+  sequenceOrder?: Prisma.SortOrder
   route?: Prisma.RouteOrderByWithRelationInput
 }
 
@@ -272,10 +272,10 @@ export type DeliveryWhereUniqueInput = Prisma.AtLeast<{
   latitude?: Prisma.FloatFilter<"Delivery"> | number
   longitude?: Prisma.FloatFilter<"Delivery"> | number
   status?: Prisma.EnumDeliveryStatusFilter<"Delivery"> | $Enums.DeliveryStatus
-  sequenceOrder?: Prisma.IntFilter<"Delivery"> | number
   customerName?: Prisma.StringFilter<"Delivery"> | string
-  routeId?: Prisma.StringFilter<"Delivery"> | string
-  route?: Prisma.XOR<Prisma.RouteScalarRelationFilter, Prisma.RouteWhereInput>
+  routeId?: Prisma.StringNullableFilter<"Delivery"> | string | null
+  sequenceOrder?: Prisma.IntFilter<"Delivery"> | number
+  route?: Prisma.XOR<Prisma.RouteNullableScalarRelationFilter, Prisma.RouteWhereInput> | null
 }, "id">
 
 export type DeliveryOrderByWithAggregationInput = {
@@ -284,9 +284,9 @@ export type DeliveryOrderByWithAggregationInput = {
   latitude?: Prisma.SortOrder
   longitude?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  sequenceOrder?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
-  routeId?: Prisma.SortOrder
+  routeId?: Prisma.SortOrderInput | Prisma.SortOrder
+  sequenceOrder?: Prisma.SortOrder
   _count?: Prisma.DeliveryCountOrderByAggregateInput
   _avg?: Prisma.DeliveryAvgOrderByAggregateInput
   _max?: Prisma.DeliveryMaxOrderByAggregateInput
@@ -303,9 +303,9 @@ export type DeliveryScalarWhereWithAggregatesInput = {
   latitude?: Prisma.FloatWithAggregatesFilter<"Delivery"> | number
   longitude?: Prisma.FloatWithAggregatesFilter<"Delivery"> | number
   status?: Prisma.EnumDeliveryStatusWithAggregatesFilter<"Delivery"> | $Enums.DeliveryStatus
-  sequenceOrder?: Prisma.IntWithAggregatesFilter<"Delivery"> | number
   customerName?: Prisma.StringWithAggregatesFilter<"Delivery"> | string
-  routeId?: Prisma.StringWithAggregatesFilter<"Delivery"> | string
+  routeId?: Prisma.StringNullableWithAggregatesFilter<"Delivery"> | string | null
+  sequenceOrder?: Prisma.IntWithAggregatesFilter<"Delivery"> | number
 }
 
 export type DeliveryCreateInput = {
@@ -314,9 +314,9 @@ export type DeliveryCreateInput = {
   latitude: number
   longitude: number
   status?: $Enums.DeliveryStatus
-  sequenceOrder?: number
   customerName: string
-  route: Prisma.RouteCreateNestedOneWithoutDeliveriesInput
+  sequenceOrder?: number
+  route?: Prisma.RouteCreateNestedOneWithoutDeliveriesInput
 }
 
 export type DeliveryUncheckedCreateInput = {
@@ -325,9 +325,9 @@ export type DeliveryUncheckedCreateInput = {
   latitude: number
   longitude: number
   status?: $Enums.DeliveryStatus
-  sequenceOrder?: number
   customerName: string
-  routeId: string
+  routeId?: string | null
+  sequenceOrder?: number
 }
 
 export type DeliveryUpdateInput = {
@@ -336,9 +336,9 @@ export type DeliveryUpdateInput = {
   latitude?: Prisma.FloatFieldUpdateOperationsInput | number
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
-  sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
-  route?: Prisma.RouteUpdateOneRequiredWithoutDeliveriesNestedInput
+  sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  route?: Prisma.RouteUpdateOneWithoutDeliveriesNestedInput
 }
 
 export type DeliveryUncheckedUpdateInput = {
@@ -347,9 +347,9 @@ export type DeliveryUncheckedUpdateInput = {
   latitude?: Prisma.FloatFieldUpdateOperationsInput | number
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
-  sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
-  routeId?: Prisma.StringFieldUpdateOperationsInput | string
+  routeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type DeliveryCreateManyInput = {
@@ -358,9 +358,9 @@ export type DeliveryCreateManyInput = {
   latitude: number
   longitude: number
   status?: $Enums.DeliveryStatus
-  sequenceOrder?: number
   customerName: string
-  routeId: string
+  routeId?: string | null
+  sequenceOrder?: number
 }
 
 export type DeliveryUpdateManyMutationInput = {
@@ -369,8 +369,8 @@ export type DeliveryUpdateManyMutationInput = {
   latitude?: Prisma.FloatFieldUpdateOperationsInput | number
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
-  sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type DeliveryUncheckedUpdateManyInput = {
@@ -379,9 +379,9 @@ export type DeliveryUncheckedUpdateManyInput = {
   latitude?: Prisma.FloatFieldUpdateOperationsInput | number
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
-  sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
-  routeId?: Prisma.StringFieldUpdateOperationsInput | string
+  routeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type DeliveryListRelationFilter = {
@@ -400,9 +400,9 @@ export type DeliveryCountOrderByAggregateInput = {
   latitude?: Prisma.SortOrder
   longitude?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  sequenceOrder?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   routeId?: Prisma.SortOrder
+  sequenceOrder?: Prisma.SortOrder
 }
 
 export type DeliveryAvgOrderByAggregateInput = {
@@ -417,9 +417,9 @@ export type DeliveryMaxOrderByAggregateInput = {
   latitude?: Prisma.SortOrder
   longitude?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  sequenceOrder?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   routeId?: Prisma.SortOrder
+  sequenceOrder?: Prisma.SortOrder
 }
 
 export type DeliveryMinOrderByAggregateInput = {
@@ -428,9 +428,9 @@ export type DeliveryMinOrderByAggregateInput = {
   latitude?: Prisma.SortOrder
   longitude?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  sequenceOrder?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   routeId?: Prisma.SortOrder
+  sequenceOrder?: Prisma.SortOrder
 }
 
 export type DeliverySumOrderByAggregateInput = {
@@ -501,14 +501,18 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type DeliveryCreateWithoutRouteInput = {
   id?: string
   address: string
   latitude: number
   longitude: number
   status?: $Enums.DeliveryStatus
-  sequenceOrder?: number
   customerName: string
+  sequenceOrder?: number
 }
 
 export type DeliveryUncheckedCreateWithoutRouteInput = {
@@ -517,8 +521,8 @@ export type DeliveryUncheckedCreateWithoutRouteInput = {
   latitude: number
   longitude: number
   status?: $Enums.DeliveryStatus
-  sequenceOrder?: number
   customerName: string
+  sequenceOrder?: number
 }
 
 export type DeliveryCreateOrConnectWithoutRouteInput = {
@@ -556,9 +560,9 @@ export type DeliveryScalarWhereInput = {
   latitude?: Prisma.FloatFilter<"Delivery"> | number
   longitude?: Prisma.FloatFilter<"Delivery"> | number
   status?: Prisma.EnumDeliveryStatusFilter<"Delivery"> | $Enums.DeliveryStatus
-  sequenceOrder?: Prisma.IntFilter<"Delivery"> | number
   customerName?: Prisma.StringFilter<"Delivery"> | string
-  routeId?: Prisma.StringFilter<"Delivery"> | string
+  routeId?: Prisma.StringNullableFilter<"Delivery"> | string | null
+  sequenceOrder?: Prisma.IntFilter<"Delivery"> | number
 }
 
 export type DeliveryCreateManyRouteInput = {
@@ -567,8 +571,8 @@ export type DeliveryCreateManyRouteInput = {
   latitude: number
   longitude: number
   status?: $Enums.DeliveryStatus
-  sequenceOrder?: number
   customerName: string
+  sequenceOrder?: number
 }
 
 export type DeliveryUpdateWithoutRouteInput = {
@@ -577,8 +581,8 @@ export type DeliveryUpdateWithoutRouteInput = {
   latitude?: Prisma.FloatFieldUpdateOperationsInput | number
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
-  sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type DeliveryUncheckedUpdateWithoutRouteInput = {
@@ -587,8 +591,8 @@ export type DeliveryUncheckedUpdateWithoutRouteInput = {
   latitude?: Prisma.FloatFieldUpdateOperationsInput | number
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
-  sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type DeliveryUncheckedUpdateManyWithoutRouteInput = {
@@ -597,8 +601,8 @@ export type DeliveryUncheckedUpdateManyWithoutRouteInput = {
   latitude?: Prisma.FloatFieldUpdateOperationsInput | number
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
-  sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -609,10 +613,10 @@ export type DeliverySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   latitude?: boolean
   longitude?: boolean
   status?: boolean
-  sequenceOrder?: boolean
   customerName?: boolean
   routeId?: boolean
-  route?: boolean | Prisma.RouteDefaultArgs<ExtArgs>
+  sequenceOrder?: boolean
+  route?: boolean | Prisma.Delivery$routeArgs<ExtArgs>
 }, ExtArgs["result"]["delivery"]>
 
 export type DeliverySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -621,10 +625,10 @@ export type DeliverySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   latitude?: boolean
   longitude?: boolean
   status?: boolean
-  sequenceOrder?: boolean
   customerName?: boolean
   routeId?: boolean
-  route?: boolean | Prisma.RouteDefaultArgs<ExtArgs>
+  sequenceOrder?: boolean
+  route?: boolean | Prisma.Delivery$routeArgs<ExtArgs>
 }, ExtArgs["result"]["delivery"]>
 
 export type DeliverySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -633,10 +637,10 @@ export type DeliverySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   latitude?: boolean
   longitude?: boolean
   status?: boolean
-  sequenceOrder?: boolean
   customerName?: boolean
   routeId?: boolean
-  route?: boolean | Prisma.RouteDefaultArgs<ExtArgs>
+  sequenceOrder?: boolean
+  route?: boolean | Prisma.Delivery$routeArgs<ExtArgs>
 }, ExtArgs["result"]["delivery"]>
 
 export type DeliverySelectScalar = {
@@ -645,26 +649,26 @@ export type DeliverySelectScalar = {
   latitude?: boolean
   longitude?: boolean
   status?: boolean
-  sequenceOrder?: boolean
   customerName?: boolean
   routeId?: boolean
+  sequenceOrder?: boolean
 }
 
-export type DeliveryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "address" | "latitude" | "longitude" | "status" | "sequenceOrder" | "customerName" | "routeId", ExtArgs["result"]["delivery"]>
+export type DeliveryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "address" | "latitude" | "longitude" | "status" | "customerName" | "routeId" | "sequenceOrder", ExtArgs["result"]["delivery"]>
 export type DeliveryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  route?: boolean | Prisma.RouteDefaultArgs<ExtArgs>
+  route?: boolean | Prisma.Delivery$routeArgs<ExtArgs>
 }
 export type DeliveryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  route?: boolean | Prisma.RouteDefaultArgs<ExtArgs>
+  route?: boolean | Prisma.Delivery$routeArgs<ExtArgs>
 }
 export type DeliveryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  route?: boolean | Prisma.RouteDefaultArgs<ExtArgs>
+  route?: boolean | Prisma.Delivery$routeArgs<ExtArgs>
 }
 
 export type $DeliveryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Delivery"
   objects: {
-    route: Prisma.$RoutePayload<ExtArgs>
+    route: Prisma.$RoutePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -672,9 +676,9 @@ export type $DeliveryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     latitude: number
     longitude: number
     status: $Enums.DeliveryStatus
-    sequenceOrder: number
     customerName: string
-    routeId: string
+    routeId: string | null
+    sequenceOrder: number
   }, ExtArgs["result"]["delivery"]>
   composites: {}
 }
@@ -1069,7 +1073,7 @@ readonly fields: DeliveryFieldRefs;
  */
 export interface Prisma__DeliveryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  route<T extends Prisma.RouteDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RouteDefaultArgs<ExtArgs>>): Prisma.Prisma__RouteClient<runtime.Types.Result.GetResult<Prisma.$RoutePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  route<T extends Prisma.Delivery$routeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Delivery$routeArgs<ExtArgs>>): Prisma.Prisma__RouteClient<runtime.Types.Result.GetResult<Prisma.$RoutePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1104,9 +1108,9 @@ export interface DeliveryFieldRefs {
   readonly latitude: Prisma.FieldRef<"Delivery", 'Float'>
   readonly longitude: Prisma.FieldRef<"Delivery", 'Float'>
   readonly status: Prisma.FieldRef<"Delivery", 'DeliveryStatus'>
-  readonly sequenceOrder: Prisma.FieldRef<"Delivery", 'Int'>
   readonly customerName: Prisma.FieldRef<"Delivery", 'String'>
   readonly routeId: Prisma.FieldRef<"Delivery", 'String'>
+  readonly sequenceOrder: Prisma.FieldRef<"Delivery", 'Int'>
 }
     
 
@@ -1505,6 +1509,25 @@ export type DeliveryDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Deliveries to delete.
    */
   limit?: number
+}
+
+/**
+ * Delivery.route
+ */
+export type Delivery$routeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Route
+   */
+  select?: Prisma.RouteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Route
+   */
+  omit?: Prisma.RouteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RouteInclude<ExtArgs> | null
+  where?: Prisma.RouteWhereInput
 }
 
 /**

@@ -7,6 +7,47 @@ datasource db {
   provider = "postgresql"
 }
 
+model User {
+  id         String   @id @default(uuid())
+  email      String   @unique
+  name       String
+  role       Role     @default(DRIVER)
+  currentLat Float?
+  currentLng Float?
+  password   String   @default("")
+  routes     Route[]
+  vehicle    Vehicle?
+}
+
+model Vehicle {
+  id           String @id @default(uuid())
+  licensePlate String @unique
+  model        String
+  driverId     String @unique
+  driver       User   @relation(fields: [driverId], references: [id])
+}
+
+model Route {
+  id          String     @id @default(uuid())
+  date        DateTime   @default(now())
+  isCompleted Boolean    @default(false)
+  driverId    String
+  deliveries  Delivery[]
+  driver      User       @relation(fields: [driverId], references: [id])
+}
+
+model Delivery {
+  id            String         @id @default(uuid())
+  address       String
+  latitude      Float
+  longitude     Float
+  status        DeliveryStatus @default(PENDING)
+  customerName  String
+  routeId       String?
+  sequenceOrder Int            @default(0)
+  route         Route?         @relation(fields: [routeId], references: [id], onDelete: Cascade)
+}
+
 enum Role {
   DISPATCHER
   DRIVER
@@ -16,55 +57,4 @@ enum DeliveryStatus {
   PENDING
   DELIVERED
   FAILED
-}
-
-model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String   @default("")
-  name      String
-  role      Role     @default(DRIVER)
-  currentLat    Float?     
-  currentLng    Float?
-  
-  // Relationships
-  vehicle   Vehicle?  // The '?' means a user might not have a vehicle yet
-  routes    Route[]   // A user can have many historical routes
-}
-
-model Vehicle {
-  id           String @id @default(uuid())
-  licensePlate String @unique
-  model        String // e.g., "Ford Transit"
-  
-  // 1-to-1 Relationship with User (Driver)
-  driverId     String @unique
-  driver       User   @relation(fields: [driverId], references: [id])
-}
-
-model Route {
-  id          String   @id @default(uuid())
-  date        DateTime @default(now())
-  isCompleted Boolean  @default(false)
-  
-  // 1-to-Many: A Route belongs to ONE Driver
-  driverId    String
-  driver      User     @relation(fields: [driverId], references: [id])
-  
-  // 1-to-Many: A Route contains MANY Deliveries
-  deliveries  Delivery[]
-}
-
-model Delivery {
-  id          String         @id @default(uuid())
-  address     String
-  latitude    Float
-  longitude   Float
-  status      DeliveryStatus @default(PENDING)
-  sequenceOrder Int           @default(0)
-  customerName String
-  
-  // 1-to-Many: A Delivery belongs to ONE Route
-  routeId     String
-  route       Route          @relation(fields: [routeId], references: [id], onDelete: Cascade)
 }

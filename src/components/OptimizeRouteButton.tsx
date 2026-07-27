@@ -2,7 +2,7 @@
 
 import React, { useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { optimizeRoute } from "@/app/actions/actions";
+import { optimizeRoute } from "@/app/actions/route";
 
 interface OptimizeRouteButtonProps {
   routeId: string;

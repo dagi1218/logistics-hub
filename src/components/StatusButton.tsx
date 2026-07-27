@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useTransition } from "react";
-import { updateDeliveryStatus } from "../app/actions/actions";
+import { updateDeliveryStatus } from "../app/actions/route";
 import { DeliveryStatus } from "../../prisma/generated/client";
 
 interface StatusButtonProps {
