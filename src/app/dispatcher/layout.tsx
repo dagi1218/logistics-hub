@@ -1,7 +1,7 @@
 
 import React from "react";
 import Link from "next/link"; 
-
+import LogoutButton from "@/components/LogoutButton";
 export default function DispatcherLayout({
   children,
 }: {
@@ -71,6 +71,8 @@ export default function DispatcherLayout({
           <div className="text-xs text-zinc-400 font-mono">
             Addis Ababa, ET
           </div>
+          <LogoutButton />
+
         </header>
 
         {/* Dynamic Page Target Area */}
