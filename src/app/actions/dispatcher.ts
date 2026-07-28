@@ -59,7 +59,7 @@ export async function createRouteWithDeliveries(driverId: string,deliveryIds: st
                   where: { id: deliveryId },
                   data: {
                     routeId: newRoute.id,
-                    squenceOrder: index + 1,
+                    sequenceOrder: index + 1,
                   },
               })
       )
@@ -68,5 +68,49 @@ export async function createRouteWithDeliveries(driverId: string,deliveryIds: st
     revalidatePath("/dispatcher/map");
     revalidatePath("/dispatcher/deliveries");
 }
+
+
+export async function assignDeliveriesToDriver(driverId:string,deliveryIds:string[]){
+           if(!driverId|| deliveryIds.length===0){
+                return {success:false,message:"Select a driver and at least one delivery to assign."};
+           }
+
+           try{
+             let activeRoute=await prisma.route.findFirst({
+                  where:{driverId:driverId,isCompleted:false},
+                  include:{deliveries:true}
+             });
+
+             if(!activeRoute){
+                activeRoute=await prisma.route.create({
+                    data:{driverId:driverId,isCompleted:false},
+                    include:{deliveries:true}
+                });
+             }
+
+             const currentStopCount = activeRoute.deliveries.length;
+              
+             const updatePromises = deliveryIds.map((deliveryId,index) =>
+                 prisma.delivery.update({
+                    where:{id:deliveryId},
+                    data:{
+                        routeId: activeRoute.id,
+                        sequenceOrder: currentStopCount + index + 1,
+                 }}
+                )
+            );
+
+            await prisma.$transaction(updatePromises);
+
+            revalidatePath("/dispatcher/map");
+            revalidatePath("/dispatcher/deliveries");
+            return {success:true};
+            
+             }catch(error){
+                console.error("Assignment error: ",error);
+                return { success: false, error: "Failed to dispatch route." };
+             }
+           }
+
 
 
