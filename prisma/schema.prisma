@@ -23,8 +23,8 @@ model Vehicle {
   id           String @id @default(uuid())
   licensePlate String @unique
   model        String
-  driverId     String @unique
-  driver       User   @relation(fields: [driverId], references: [id])
+  driverId     String? @unique
+  driver       User?  @relation(fields: [driverId], references: [id])
 }
 
 model Route {

@@ -145,7 +145,7 @@ export type VehicleGroupByOutputType = {
   id: string
   licensePlate: string
   model: string
-  driverId: string
+  driverId: string | null
   _count: VehicleCountAggregateOutputType | null
   _min: VehicleMinAggregateOutputType | null
   _max: VehicleMaxAggregateOutputType | null
@@ -173,15 +173,15 @@ export type VehicleWhereInput = {
   id?: Prisma.StringFilter<"Vehicle"> | string
   licensePlate?: Prisma.StringFilter<"Vehicle"> | string
   model?: Prisma.StringFilter<"Vehicle"> | string
-  driverId?: Prisma.StringFilter<"Vehicle"> | string
-  driver?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  driverId?: Prisma.StringNullableFilter<"Vehicle"> | string | null
+  driver?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type VehicleOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   licensePlate?: Prisma.SortOrder
   model?: Prisma.SortOrder
-  driverId?: Prisma.SortOrder
+  driverId?: Prisma.SortOrderInput | Prisma.SortOrder
   driver?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -193,14 +193,14 @@ export type VehicleWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.VehicleWhereInput[]
   NOT?: Prisma.VehicleWhereInput | Prisma.VehicleWhereInput[]
   model?: Prisma.StringFilter<"Vehicle"> | string
-  driver?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  driver?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "licensePlate" | "driverId">
 
 export type VehicleOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   licensePlate?: Prisma.SortOrder
   model?: Prisma.SortOrder
-  driverId?: Prisma.SortOrder
+  driverId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.VehicleCountOrderByAggregateInput
   _max?: Prisma.VehicleMaxOrderByAggregateInput
   _min?: Prisma.VehicleMinOrderByAggregateInput
@@ -213,42 +213,42 @@ export type VehicleScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Vehicle"> | string
   licensePlate?: Prisma.StringWithAggregatesFilter<"Vehicle"> | string
   model?: Prisma.StringWithAggregatesFilter<"Vehicle"> | string
-  driverId?: Prisma.StringWithAggregatesFilter<"Vehicle"> | string
+  driverId?: Prisma.StringNullableWithAggregatesFilter<"Vehicle"> | string | null
 }
 
 export type VehicleCreateInput = {
   id?: string
   licensePlate: string
   model: string
-  driver: Prisma.UserCreateNestedOneWithoutVehicleInput
+  driver?: Prisma.UserCreateNestedOneWithoutVehicleInput
 }
 
 export type VehicleUncheckedCreateInput = {
   id?: string
   licensePlate: string
   model: string
-  driverId: string
+  driverId?: string | null
 }
 
 export type VehicleUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   licensePlate?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
-  driver?: Prisma.UserUpdateOneRequiredWithoutVehicleNestedInput
+  driver?: Prisma.UserUpdateOneWithoutVehicleNestedInput
 }
 
 export type VehicleUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   licensePlate?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
-  driverId?: Prisma.StringFieldUpdateOperationsInput | string
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type VehicleCreateManyInput = {
   id?: string
   licensePlate: string
   model: string
-  driverId: string
+  driverId?: string | null
 }
 
 export type VehicleUpdateManyMutationInput = {
@@ -261,7 +261,7 @@ export type VehicleUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   licensePlate?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
-  driverId?: Prisma.StringFieldUpdateOperationsInput | string
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type VehicleNullableScalarRelationFilter = {
@@ -322,6 +322,10 @@ export type VehicleUncheckedUpdateOneWithoutDriverNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.VehicleUpdateToOneWithWhereWithoutDriverInput, Prisma.VehicleUpdateWithoutDriverInput>, Prisma.VehicleUncheckedUpdateWithoutDriverInput>
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type VehicleCreateWithoutDriverInput = {
   id?: string
   licensePlate: string
@@ -369,7 +373,7 @@ export type VehicleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   licensePlate?: boolean
   model?: boolean
   driverId?: boolean
-  driver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  driver?: boolean | Prisma.Vehicle$driverArgs<ExtArgs>
 }, ExtArgs["result"]["vehicle"]>
 
 export type VehicleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -377,7 +381,7 @@ export type VehicleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   licensePlate?: boolean
   model?: boolean
   driverId?: boolean
-  driver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  driver?: boolean | Prisma.Vehicle$driverArgs<ExtArgs>
 }, ExtArgs["result"]["vehicle"]>
 
 export type VehicleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -385,7 +389,7 @@ export type VehicleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   licensePlate?: boolean
   model?: boolean
   driverId?: boolean
-  driver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  driver?: boolean | Prisma.Vehicle$driverArgs<ExtArgs>
 }, ExtArgs["result"]["vehicle"]>
 
 export type VehicleSelectScalar = {
@@ -397,25 +401,25 @@ export type VehicleSelectScalar = {
 
 export type VehicleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "licensePlate" | "model" | "driverId", ExtArgs["result"]["vehicle"]>
 export type VehicleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  driver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  driver?: boolean | Prisma.Vehicle$driverArgs<ExtArgs>
 }
 export type VehicleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  driver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  driver?: boolean | Prisma.Vehicle$driverArgs<ExtArgs>
 }
 export type VehicleIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  driver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  driver?: boolean | Prisma.Vehicle$driverArgs<ExtArgs>
 }
 
 export type $VehiclePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Vehicle"
   objects: {
-    driver: Prisma.$UserPayload<ExtArgs>
+    driver: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     licensePlate: string
     model: string
-    driverId: string
+    driverId: string | null
   }, ExtArgs["result"]["vehicle"]>
   composites: {}
 }
@@ -810,7 +814,7 @@ readonly fields: VehicleFieldRefs;
  */
 export interface Prisma__VehicleClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  driver<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  driver<T extends Prisma.Vehicle$driverArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Vehicle$driverArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1242,6 +1246,25 @@ export type VehicleDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Vehicles to delete.
    */
   limit?: number
+}
+
+/**
+ * Vehicle.driver
+ */
+export type Vehicle$driverArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**
