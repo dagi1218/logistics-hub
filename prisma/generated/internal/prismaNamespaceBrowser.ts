@@ -89,8 +89,14 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 export const VehicleScalarFieldEnum = {
   id: 'id',
   licensePlate: 'licensePlate',
+  make: 'make',
   model: 'model',
-  driverId: 'driverId'
+  year: 'year',
+  capacity: 'capacity',
+  status: 'status',
+  driverId: 'driverId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type VehicleScalarFieldEnum = (typeof VehicleScalarFieldEnum)[keyof typeof VehicleScalarFieldEnum]

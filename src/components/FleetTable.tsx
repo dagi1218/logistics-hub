@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState } from "react";
-import DriverManagementDrawer from "./DriverManagementDrawer";
+import DriverManagementDrawer from "./modals/DriverManagementDrawer";
 
 export interface VehicleData {
   id: string;

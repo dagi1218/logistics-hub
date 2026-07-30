@@ -3,7 +3,7 @@ import React from "react";
 import { prisma } from "../../../lib/prisma";
 import { DeliveryStatus } from "../../../../prisma/generated/client";
 import SearchBar from "../../../components/SearchBar";
-import CreateDeliveryModal from "../../../components/CreateDeliveryModal";
+import CreateDeliveryModal from "../../../components/modals/CreateDeliveryModal";
 
 // Next.js automatically passes URL search parameters as a Promise to page components
 interface PageProps {

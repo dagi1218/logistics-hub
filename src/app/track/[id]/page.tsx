@@ -2,8 +2,8 @@
 import React from "react";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import CustomerTrackMap from "@/components/CustomerMapWrapper";
-import LiveTracker from "@/components/LiveTracker";
+import CustomerTrackMap from "@/components/map/CustomerMapWrapper";
+import LiveTracker from "@/components/map/LiveTracker";
 import { getRoadPath } from "@/lib/routing";
 
 interface PageProps {

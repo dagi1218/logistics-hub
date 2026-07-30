@@ -3,7 +3,7 @@
 
 import  { useState, useEffect, useTransition } from "react";
 import { assignVehicleToDriver } from "@/app/actions/fleet";
-import { DriverData, VehicleData } from "./FleetTable";
+import { DriverData, VehicleData } from "../FleetTable";
 
 interface DrawerProps {
   driver: DriverData | null;

@@ -3,7 +3,7 @@ import React from "react";
 import { prisma } from "@/lib/prisma";
 import StatusButton from "@/components/StatusButton";
 import SimulationControl from "@/components/SimulationControl";
-import OptimizeRouteButton from "@/components/OptimizeRouteButton";
+import OptimizeRouteButton from "@/components/map/OptimizeRouteButton";
 import { getRoadPath } from "@/lib/routing";
 
 interface PageProps {

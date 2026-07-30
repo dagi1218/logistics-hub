@@ -22,9 +22,15 @@ model User {
 model Vehicle {
   id           String @id @default(uuid())
   licensePlate String @unique
+  make         String?
   model        String
+  year         Int?
+  capacity    Float?
+  status      VehicleStatus @default(AVAILABLE)
   driverId     String? @unique
   driver       User?  @relation(fields: [driverId], references: [id])
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now()) @updatedAt
 }
 
 model Route {
@@ -57,4 +63,11 @@ enum DeliveryStatus {
   PENDING
   DELIVERED
   FAILED
+}
+
+
+enum VehicleStatus {
+  AVAILABLE
+  IN_TRANSIT
+  MAINTENANCE
 }

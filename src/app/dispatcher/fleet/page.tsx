@@ -1,9 +1,12 @@
 // src/app/dispatcher/fleet/page.tsx
-import React from "react";
+
+
 import { prisma } from "@/lib/prisma";
 import FleetTable from "@/components/FleetTable";
+import { AddVehicleModal } from '@/components/modals/AddVehicleModal';
 
 export default async function FleetPage() {
+ 
   const drivers = await prisma.user.findMany({
     where: { role: "DRIVER" },
     include: {
@@ -21,6 +24,8 @@ export default async function FleetPage() {
 
   return (
     <div className="space-y-6">
+      <AddVehicleModal/>
+
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-zinc-900">Fleet Control</h1>
         <p className="text-sm text-zinc-500">
@@ -29,6 +34,7 @@ export default async function FleetPage() {
       </div>
 
       <FleetTable drivers={drivers as any} allVehicles={vehicles as any} />
+
     </div>
   );
 }

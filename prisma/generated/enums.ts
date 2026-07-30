@@ -24,3 +24,12 @@ export const DeliveryStatus = {
 } as const
 
 export type DeliveryStatus = (typeof DeliveryStatus)[keyof typeof DeliveryStatus]
+
+
+export const VehicleStatus = {
+  AVAILABLE: 'AVAILABLE',
+  IN_TRANSIT: 'IN_TRANSIT',
+  MAINTENANCE: 'MAINTENANCE'
+} as const
+
+export type VehicleStatus = (typeof VehicleStatus)[keyof typeof VehicleStatus]
