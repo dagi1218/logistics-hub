@@ -27,21 +27,26 @@ export async function createDelivery(formData: FormData) {
   revalidatePath("/dispatcher/map");
 }
 
-export async function assignVehicleToDriver(driverId:string, vehicleId:string| null){
-    if(!driverId){
-        throw new Error("Driver ID is required");
-    }
+export async function assignVehicleToDriver(driverId: string, vehicleId: string | null) {
+  if (!driverId) {
+    throw new Error("Driver ID is required");
+  }
 
-    await prisma.user.update({
-         where:{
-            id:driverId
-         },
-         data:{
-            vehicleId:vehicleId? vehicleId : null
-         }
+  // Unassign driver from any existing vehicle
+  await prisma.vehicle.updateMany({
+    where: { driverId: driverId },
+    data: { driverId: null },
+  });
+
+  // Assign vehicle to driver if vehicleId is provided
+  if (vehicleId) {
+    await prisma.vehicle.update({
+      where: { id: vehicleId },
+      data: { driverId: driverId },
     });
+  }
 
-    revalidatePath("/dispatcher/fleet");
+  revalidatePath("/dispatcher/fleet");
 }
 
 

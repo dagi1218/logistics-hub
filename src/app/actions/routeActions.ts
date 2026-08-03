@@ -1,7 +1,6 @@
-// src/app/actions.ts
 "use server";
 
-import { prisma } from "../../lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { DeliveryStatus } from "../../../prisma/generated/client";
 import { optimizeRouteSequence } from "@/lib/routing";
@@ -23,7 +22,7 @@ export async function optimizeRoute(routeId: string) {
       return { success: false, error: "Route or driver not found" };
     }
 
-    const driverLat = route.driver.currentLat ?? 9.03; // Fallback to center coordinates if null
+    const driverLat = route.driver.currentLat ?? 9.03; // Fallback coordinates
     const driverLng = route.driver.currentLng ?? 38.74;
 
     const stops = route.deliveries.map(d => ({
@@ -32,28 +31,34 @@ export async function optimizeRoute(routeId: string) {
       longitude: d.longitude
     }));
 
-    // 2. Call our OSRM utility to get the optimal sequence array
-    const optimizedIds = await optimizeRouteSequence(driverLat, driverLng, stops);
+    // 2. Call TSP optimizer (OSRM Trip API with Nearest-Neighbor fallback)
+    const { orderedIds, distanceKm, durationMins } = await optimizeRouteSequence(
+      driverLat,
+      driverLng,
+      stops
+    );
 
-    // 3. Write the new sequence orders back to the database using a transaction
-    const updatePromises = optimizedIds.map((deliveryId, index) =>
+    // 3. Write new sequence orders back to database in a transaction
+    const updatePromises = orderedIds.map((deliveryId, index) =>
       prisma.delivery.update({
         where: { id: deliveryId },
         data: { sequenceOrder: index }
       })
     );
 
-   console.log("🚀 Sending transaction to Neon...");
-  const result = await prisma.$transaction(updatePromises);
-  console.log("✅ Database confirmation:", result);
+    await prisma.$transaction(updatePromises);
 
-    // 4. Instantly push updates to components rendering these queues
+    // 4. Push updates to pages rendering these queues
     revalidatePath("/dispatcher/map");
     revalidatePath("/dispatcher/deliveries");
     revalidatePath(`/driver/${route.driverId}`);
-   
 
-    return { success: true };
+    return {
+      success: true,
+      stopsCount: stops.length,
+      distanceKm,
+      durationMins,
+    };
   } catch (error) {
     console.error("Failed to optimize route:", error);
     return { success: false, error: "Optimization process failed" };
@@ -62,14 +67,11 @@ export async function optimizeRoute(routeId: string) {
 
 export async function updateDeliveryStatus(deliveryId: string, newStatus: DeliveryStatus) {
   try {
-    // 1. Update the database directly
     await prisma.delivery.update({
       where: { id: deliveryId },
       data: { status: newStatus },
     });
 
-    //Tell Next.js to instantly refresh these pages 
-    // to show the new data, without the user having to refresh their browser!
     revalidatePath("/dispatcher/map");
     revalidatePath("/driver");
     revalidatePath("/dispatcher/deliveries");
@@ -81,10 +83,8 @@ export async function updateDeliveryStatus(deliveryId: string, newStatus: Delive
   }
 }
 
-
 export async function updateDriverLocation(driverId: string, lat: number, lng: number) {
   try {
-    // 1. Update the driver's current coordinates in the database
     await prisma.user.update({
       where: { id: driverId },
       data: { 
@@ -93,7 +93,6 @@ export async function updateDriverLocation(driverId: string, lat: number, lng: n
       },
     });
 
-    // 2. Instantly refresh the Dispatcher Map so the truck icon moves!
     revalidatePath("/dispatcher/map");
 
     return { success: true };

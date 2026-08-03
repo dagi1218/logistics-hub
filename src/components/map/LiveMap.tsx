@@ -14,6 +14,22 @@ const defaultIcon = L.icon({
   shadowSize: [41, 41],
 });
 
+const pendingIcon = L.divIcon({
+  className: "custom-pending-pin",
+  html: `<div style="background-color: #f59e0b; width: 14px; height: 14px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>`,
+  iconSize: [14, 14],
+  iconAnchor: [7, 7],
+});
+
+
+interface UnassignedDelivery {
+  id: string;
+  customerName: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+}
+
 interface Delivery {
   id: string;
   customerName: string;
@@ -35,6 +51,8 @@ interface Route {
 
 interface LiveMapProps {
   routes: Route[];
+  unassignedDeliveries?: UnassignedDelivery[];
+
 }
 
 // create per-route truck icon instances (avoids marker reuse/render issues)
@@ -46,7 +64,7 @@ const createTruckIcon = (url = "/truck.png") =>
     iconAnchor: [16, 32],
   });
 
-export default function LiveMap({ routes }: LiveMapProps) {
+export default function LiveMap({ routes ,unassignedDeliveries=[]}: LiveMapProps) {
   const addisCenter: [number, number] = [9.0222, 38.7468];
 
   return (

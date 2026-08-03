@@ -30,7 +30,7 @@ export function AddVehicleModal() {
 
   return (
     <>
-      {/* 1. The Trigger Button (Always renders) */}
+      
       <button
         onClick={() => setIsModalOpen(true)}
         className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
@@ -38,7 +38,7 @@ export function AddVehicleModal() {
         + Add Vehicle
       </button>
 
-      {/* 2. The Modal Backdrop & Dialog (Conditionally rendered when open) */}
+   
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
           <div className="w-full max-w-lg rounded-xl bg-white p-6 shadow-xl dark:bg-slate-900 dark:text-white">

@@ -3,7 +3,7 @@ import React from "react";
 import { prisma } from "@/lib/prisma";
 import MapWrapper from "@/components/map/MapWrapper";
 import OptimizeRouteButton from "@/components/map/OptimizeRouteButton";
-import UnassignedDeliveriesSidebar from "../../../components/modals/UnassignedDeliveriesSidebar";
+import UnassignedDeliveriesSidebar from "@/components/modals/UnassignedDeliveriesSidebar";
 import { getRoadPath } from "@/lib/routing";
 import LiveTracker from "@/components/map/LiveTracker";
 

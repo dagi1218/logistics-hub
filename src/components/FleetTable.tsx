@@ -96,3 +96,5 @@ export default function FleetTable({ drivers, allVehicles }: FleetTableProps) {
     </>
   );
 }
+
+
