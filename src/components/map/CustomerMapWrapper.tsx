@@ -15,6 +15,7 @@ const DynamicMap = dynamic(() => import("./CustomerTrackMap"), {
 interface CustomerTrackMapProps {
   customerLat: number;
   customerLng: number;
+  driverId?: string | null;
   driverLat: number | null;
   driverLng: number | null;
   customerName: string;
@@ -24,6 +25,7 @@ interface CustomerTrackMapProps {
 export default function CustomerMapWrapper({
   customerLat,
   customerLng,
+  driverId,
   driverLat,
   driverLng,
   customerName,
@@ -33,6 +35,7 @@ export default function CustomerMapWrapper({
     <DynamicMap
       customerLat={customerLat}
       customerLng={customerLng}
+      driverId={driverId}
       driverLat={driverLat}
       driverLng={driverLng}
       customerName={customerName}

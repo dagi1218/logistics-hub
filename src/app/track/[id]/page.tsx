@@ -97,6 +97,7 @@ export default async function CustomerTrackingPage({ params }: PageProps) {
           <CustomerTrackMap
             customerLat={delivery.latitude}
             customerLng={delivery.longitude}
+            driverId={isEnRoute ? driver?.id : null}
             driverLat={isEnRoute ? driver?.currentLat ?? null : null}
             driverLng={isEnRoute ? driver?.currentLng ?? null : null}
             customerName={delivery.customerName}
