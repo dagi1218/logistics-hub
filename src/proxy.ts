@@ -1,71 +1,86 @@
-
+// src/proxy.ts
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { jwtVerify } from "jose";
-
-const JWT_SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET || "fallback-super-secret-key-change-this-in-prod"
-);
+import { verifyToken } from "@/lib/auth";
 
 export async function proxy(req: NextRequest) {
   const path = req.nextUrl.pathname;
 
-  //  Define Public pages (accessible to anyone)
-  const isPublicPath = path === "/login" || path.startsWith("/track/");
+  // 1. Define Public routes (accessible to anyone without auth)
+  const isPublicPath =
+    path === "/login" ||
+    path.startsWith("/track/") ||
+    path.startsWith("/api/stream/");
 
-  // Retrieve session cookie
+  // 2. Retrieve & verify session token using centralized auth utility
   const sessionToken = req.cookies.get("session")?.value;
+  const decodedUser = sessionToken ? await verifyToken(sessionToken) : null;
 
-  //  Verify session token
-  let decodedUser: any = null;
-  if (sessionToken) {
-    try {
-      const { payload } = await jwtVerify(sessionToken, JWT_SECRET);
-      decodedUser = payload;
-    } catch (err) {
-      // Invalid or expired token; clear it
-      const res = NextResponse.redirect(new URL("/login", req.url));
-      res.cookies.delete("session");
-      return res;
-    }
+  // If a session token exists but is invalid or expired, clear it and redirect to login
+  if (sessionToken && !decodedUser) {
+    const res = NextResponse.redirect(new URL("/login", req.url));
+    res.cookies.delete("session");
+    return res;
   }
 
-  // Enforce Access Rules
+  // 3. Unauthenticated access enforcement
   if (!decodedUser && !isPublicPath) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    const loginUrl = new URL("/login", req.url);
+    loginUrl.searchParams.set("redirect", path);
+    return NextResponse.redirect(loginUrl);
   }
 
+  // 4. Authenticated user routing & RBAC enforcement
   if (decodedUser) {
-    // If logged in and trying to access /login, redirect appropriately
+    // If logged-in user visits /login, redirect to role home
     if (path === "/login") {
-      if (decodedUser.role === "DISPATCHER" || decodedUser.role === "ADMIN") {
-        return NextResponse.redirect(new URL("/dispatcher/map", req.url));
+      const homePath =
+        decodedUser.role === "DISPATCHER" || decodedUser.role === "ADMIN"
+          ? "/dispatcher/map"
+          : `/driver/${decodedUser.userId}`;
+      return NextResponse.redirect(new URL(homePath, req.url));
+    }
+
+    // Role Guard: /dispatcher/* -> Only DISPATCHER or ADMIN
+    if (path.startsWith("/dispatcher")) {
+      if (decodedUser.role !== "DISPATCHER" && decodedUser.role !== "ADMIN") {
+        return NextResponse.redirect(
+          new URL(`/driver/${decodedUser.userId}`, req.url)
+        );
       }
-      return NextResponse.redirect(new URL(`/driver/${decodedUser.userId}`, req.url));
     }
 
-    // Lock down `/dispatcher` to DISPATCHER or ADMIN only
-    if (path.startsWith("/dispatcher") && decodedUser.role !== "DISPATCHER" && decodedUser.role !== "ADMIN") {
-      return NextResponse.redirect(new URL("/login", req.url));
-    }
-
-    // Lock down `/driver` to the specific logged-in driver only!
+    // Role Guard: /driver/* -> Specific driver or DISPATCHER/ADMIN
     if (path.startsWith("/driver")) {
       const targetDriverId = path.split("/")[2];
-      if (decodedUser.role !== "DRIVER" && decodedUser.role !== "ADMIN") {
-        return NextResponse.redirect(new URL("/login", req.url));
-      }
-      // Prevent Driver A from accessing Driver B's link
-      if (decodedUser.role === "DRIVER" && decodedUser.userId !== targetDriverId) {
-        return NextResponse.redirect(new URL(`/driver/${decodedUser.userId}`, req.url));
+
+      if (decodedUser.role === "DRIVER" && targetDriverId && decodedUser.userId !== targetDriverId) {
+        // Prevent Driver A from accessing Driver B's dashboard
+        return NextResponse.redirect(
+          new URL(`/driver/${decodedUser.userId}`, req.url)
+        );
       }
     }
+
+    // 5. Downstream Header Enrichment (Identity Propagation)
+    const requestHeaders = new Headers(req.headers);
+    requestHeaders.set("x-user-id", decodedUser.userId);
+    requestHeaders.set("x-user-role", decodedUser.role);
+    requestHeaders.set("x-user-email", decodedUser.email);
+
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
   }
 
   return NextResponse.next();
 }
 
-// Intercept all routes except static assets, maps, and APIs
+// Intercept all routes except Next.js internals and static assets
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\.png$).*)"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|svg|webp|ico)$).*)",
+  ],
 };
