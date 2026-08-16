@@ -43,15 +43,21 @@ model Route {
 }
 
 model Delivery {
-  id            String         @id @default(uuid())
-  address       String
-  latitude      Float
-  longitude     Float
-  status        DeliveryStatus @default(PENDING)
-  customerName  String
-  routeId       String?
-  sequenceOrder Int            @default(0)
-  route         Route?         @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  id              String         @id @default(uuid())
+  address         String
+  latitude        Float
+  longitude       Float
+  status          DeliveryStatus @default(PENDING)
+  customerName    String
+  routeId         String?
+  sequenceOrder   Int            @default(0)
+  verificationPin String?
+  signature       String?
+  notes           String?
+  deliveredAt     DateTime?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @default(now()) @updatedAt
+  route           Route?         @relation(fields: [routeId], references: [id], onDelete: Cascade)
 }
 
 enum Role {

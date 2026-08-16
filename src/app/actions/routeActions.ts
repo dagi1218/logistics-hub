@@ -65,6 +65,61 @@ export async function optimizeRoute(routeId: string) {
   }
 }
 
+export async function completeDeliveryWithPOD(
+  deliveryId: string,
+  payload: {
+    pin: string;
+    signature?: string;
+    notes?: string;
+    driverLat?: number;
+    driverLng?: number;
+  }
+) {
+  try {
+    const delivery = await prisma.delivery.findUnique({
+      where: { id: deliveryId },
+    });
+
+    if (!delivery) {
+      return { success: false, error: "Delivery record not found." };
+    }
+
+    if (delivery.status === "DELIVERED") {
+      return { success: false, error: "This package has already been marked as delivered." };
+    }
+
+    // 1. Verify 4-digit Customer Security PIN if configured
+    if (delivery.verificationPin && payload.pin.trim() !== delivery.verificationPin.trim()) {
+      return {
+        success: false,
+        error: "Incorrect Customer PIN. Please ask the recipient for the 4-digit code displayed on their live tracking screen.",
+      };
+    }
+
+    // 2. Update status and store POD details
+    await prisma.delivery.update({
+      where: { id: deliveryId },
+      data: {
+        status: "DELIVERED",
+        signature: payload.signature || null,
+        notes: payload.notes || null,
+        deliveredAt: new Date(),
+      },
+    });
+
+    // 3. Revalidate affected paths across driver, dispatcher, and customer views
+    revalidatePath("/dispatcher/map");
+    revalidatePath("/dispatcher/deliveries");
+    revalidatePath("/driver");
+    revalidatePath(`/track/${deliveryId}`);
+
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to complete delivery with POD:", error);
+    return { success: false, error: "Failed to record Proof of Delivery." };
+  }
+}
+
 export async function updateDeliveryStatus(deliveryId: string, newStatus: DeliveryStatus) {
   try {
     await prisma.delivery.update({
@@ -75,6 +130,7 @@ export async function updateDeliveryStatus(deliveryId: string, newStatus: Delive
     revalidatePath("/dispatcher/map");
     revalidatePath("/driver");
     revalidatePath("/dispatcher/deliveries");
+    revalidatePath(`/track/${deliveryId}`);
 
     return { success: true };
   } catch (error) {

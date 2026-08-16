@@ -789,7 +789,13 @@ export const DeliveryScalarFieldEnum = {
   status: 'status',
   customerName: 'customerName',
   routeId: 'routeId',
-  sequenceOrder: 'sequenceOrder'
+  sequenceOrder: 'sequenceOrder',
+  verificationPin: 'verificationPin',
+  signature: 'signature',
+  notes: 'notes',
+  deliveredAt: 'deliveredAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type DeliveryScalarFieldEnum = (typeof DeliveryScalarFieldEnum)[keyof typeof DeliveryScalarFieldEnum]

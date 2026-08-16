@@ -77,7 +77,11 @@ export default async function DriverAppPage({ params }: PageProps) {
               <h2 className="text-lg font-bold text-zinc-900">{delivery.customerName}</h2>
               <p className="text-sm text-zinc-500 mt-1">{delivery.address}</p>
             </div>
-            <StatusButton deliveryId={delivery.id} currentStatus={delivery.status} />
+            <StatusButton
+              deliveryId={delivery.id}
+              currentStatus={delivery.status}
+              customerName={delivery.customerName}
+            />
           </div>
         ))}
       </div>

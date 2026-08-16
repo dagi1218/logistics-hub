@@ -47,6 +47,12 @@ export type DeliveryMinAggregateOutputType = {
   customerName: string | null
   routeId: string | null
   sequenceOrder: number | null
+  verificationPin: string | null
+  signature: string | null
+  notes: string | null
+  deliveredAt: Date | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type DeliveryMaxAggregateOutputType = {
@@ -58,6 +64,12 @@ export type DeliveryMaxAggregateOutputType = {
   customerName: string | null
   routeId: string | null
   sequenceOrder: number | null
+  verificationPin: string | null
+  signature: string | null
+  notes: string | null
+  deliveredAt: Date | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type DeliveryCountAggregateOutputType = {
@@ -69,6 +81,12 @@ export type DeliveryCountAggregateOutputType = {
   customerName: number
   routeId: number
   sequenceOrder: number
+  verificationPin: number
+  signature: number
+  notes: number
+  deliveredAt: number
+  createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -94,6 +112,12 @@ export type DeliveryMinAggregateInputType = {
   customerName?: true
   routeId?: true
   sequenceOrder?: true
+  verificationPin?: true
+  signature?: true
+  notes?: true
+  deliveredAt?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type DeliveryMaxAggregateInputType = {
@@ -105,6 +129,12 @@ export type DeliveryMaxAggregateInputType = {
   customerName?: true
   routeId?: true
   sequenceOrder?: true
+  verificationPin?: true
+  signature?: true
+  notes?: true
+  deliveredAt?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type DeliveryCountAggregateInputType = {
@@ -116,6 +146,12 @@ export type DeliveryCountAggregateInputType = {
   customerName?: true
   routeId?: true
   sequenceOrder?: true
+  verificationPin?: true
+  signature?: true
+  notes?: true
+  deliveredAt?: true
+  createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -214,6 +250,12 @@ export type DeliveryGroupByOutputType = {
   customerName: string
   routeId: string | null
   sequenceOrder: number
+  verificationPin: string | null
+  signature: string | null
+  notes: string | null
+  deliveredAt: Date | null
+  createdAt: Date
+  updatedAt: Date
   _count: DeliveryCountAggregateOutputType | null
   _avg: DeliveryAvgAggregateOutputType | null
   _sum: DeliverySumAggregateOutputType | null
@@ -248,6 +290,12 @@ export type DeliveryWhereInput = {
   customerName?: Prisma.StringFilter<"Delivery"> | string
   routeId?: Prisma.StringNullableFilter<"Delivery"> | string | null
   sequenceOrder?: Prisma.IntFilter<"Delivery"> | number
+  verificationPin?: Prisma.StringNullableFilter<"Delivery"> | string | null
+  signature?: Prisma.StringNullableFilter<"Delivery"> | string | null
+  notes?: Prisma.StringNullableFilter<"Delivery"> | string | null
+  deliveredAt?: Prisma.DateTimeNullableFilter<"Delivery"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"Delivery"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Delivery"> | Date | string
   route?: Prisma.XOR<Prisma.RouteNullableScalarRelationFilter, Prisma.RouteWhereInput> | null
 }
 
@@ -260,6 +308,12 @@ export type DeliveryOrderByWithRelationInput = {
   customerName?: Prisma.SortOrder
   routeId?: Prisma.SortOrderInput | Prisma.SortOrder
   sequenceOrder?: Prisma.SortOrder
+  verificationPin?: Prisma.SortOrderInput | Prisma.SortOrder
+  signature?: Prisma.SortOrderInput | Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  deliveredAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   route?: Prisma.RouteOrderByWithRelationInput
 }
 
@@ -275,6 +329,12 @@ export type DeliveryWhereUniqueInput = Prisma.AtLeast<{
   customerName?: Prisma.StringFilter<"Delivery"> | string
   routeId?: Prisma.StringNullableFilter<"Delivery"> | string | null
   sequenceOrder?: Prisma.IntFilter<"Delivery"> | number
+  verificationPin?: Prisma.StringNullableFilter<"Delivery"> | string | null
+  signature?: Prisma.StringNullableFilter<"Delivery"> | string | null
+  notes?: Prisma.StringNullableFilter<"Delivery"> | string | null
+  deliveredAt?: Prisma.DateTimeNullableFilter<"Delivery"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"Delivery"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Delivery"> | Date | string
   route?: Prisma.XOR<Prisma.RouteNullableScalarRelationFilter, Prisma.RouteWhereInput> | null
 }, "id">
 
@@ -287,6 +347,12 @@ export type DeliveryOrderByWithAggregationInput = {
   customerName?: Prisma.SortOrder
   routeId?: Prisma.SortOrderInput | Prisma.SortOrder
   sequenceOrder?: Prisma.SortOrder
+  verificationPin?: Prisma.SortOrderInput | Prisma.SortOrder
+  signature?: Prisma.SortOrderInput | Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  deliveredAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.DeliveryCountOrderByAggregateInput
   _avg?: Prisma.DeliveryAvgOrderByAggregateInput
   _max?: Prisma.DeliveryMaxOrderByAggregateInput
@@ -306,6 +372,12 @@ export type DeliveryScalarWhereWithAggregatesInput = {
   customerName?: Prisma.StringWithAggregatesFilter<"Delivery"> | string
   routeId?: Prisma.StringNullableWithAggregatesFilter<"Delivery"> | string | null
   sequenceOrder?: Prisma.IntWithAggregatesFilter<"Delivery"> | number
+  verificationPin?: Prisma.StringNullableWithAggregatesFilter<"Delivery"> | string | null
+  signature?: Prisma.StringNullableWithAggregatesFilter<"Delivery"> | string | null
+  notes?: Prisma.StringNullableWithAggregatesFilter<"Delivery"> | string | null
+  deliveredAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Delivery"> | Date | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Delivery"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Delivery"> | Date | string
 }
 
 export type DeliveryCreateInput = {
@@ -316,6 +388,12 @@ export type DeliveryCreateInput = {
   status?: $Enums.DeliveryStatus
   customerName: string
   sequenceOrder?: number
+  verificationPin?: string | null
+  signature?: string | null
+  notes?: string | null
+  deliveredAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   route?: Prisma.RouteCreateNestedOneWithoutDeliveriesInput
 }
 
@@ -328,6 +406,12 @@ export type DeliveryUncheckedCreateInput = {
   customerName: string
   routeId?: string | null
   sequenceOrder?: number
+  verificationPin?: string | null
+  signature?: string | null
+  notes?: string | null
+  deliveredAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type DeliveryUpdateInput = {
@@ -338,6 +422,12 @@ export type DeliveryUpdateInput = {
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  verificationPin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   route?: Prisma.RouteUpdateOneWithoutDeliveriesNestedInput
 }
 
@@ -350,6 +440,12 @@ export type DeliveryUncheckedUpdateInput = {
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   routeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  verificationPin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DeliveryCreateManyInput = {
@@ -361,6 +457,12 @@ export type DeliveryCreateManyInput = {
   customerName: string
   routeId?: string | null
   sequenceOrder?: number
+  verificationPin?: string | null
+  signature?: string | null
+  notes?: string | null
+  deliveredAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type DeliveryUpdateManyMutationInput = {
@@ -371,6 +473,12 @@ export type DeliveryUpdateManyMutationInput = {
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  verificationPin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DeliveryUncheckedUpdateManyInput = {
@@ -382,6 +490,12 @@ export type DeliveryUncheckedUpdateManyInput = {
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   routeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  verificationPin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DeliveryListRelationFilter = {
@@ -403,6 +517,12 @@ export type DeliveryCountOrderByAggregateInput = {
   customerName?: Prisma.SortOrder
   routeId?: Prisma.SortOrder
   sequenceOrder?: Prisma.SortOrder
+  verificationPin?: Prisma.SortOrder
+  signature?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  deliveredAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type DeliveryAvgOrderByAggregateInput = {
@@ -420,6 +540,12 @@ export type DeliveryMaxOrderByAggregateInput = {
   customerName?: Prisma.SortOrder
   routeId?: Prisma.SortOrder
   sequenceOrder?: Prisma.SortOrder
+  verificationPin?: Prisma.SortOrder
+  signature?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  deliveredAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type DeliveryMinOrderByAggregateInput = {
@@ -431,6 +557,12 @@ export type DeliveryMinOrderByAggregateInput = {
   customerName?: Prisma.SortOrder
   routeId?: Prisma.SortOrder
   sequenceOrder?: Prisma.SortOrder
+  verificationPin?: Prisma.SortOrder
+  signature?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  deliveredAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type DeliverySumOrderByAggregateInput = {
@@ -501,6 +633,10 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
 export type DeliveryCreateWithoutRouteInput = {
   id?: string
   address: string
@@ -509,6 +645,12 @@ export type DeliveryCreateWithoutRouteInput = {
   status?: $Enums.DeliveryStatus
   customerName: string
   sequenceOrder?: number
+  verificationPin?: string | null
+  signature?: string | null
+  notes?: string | null
+  deliveredAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type DeliveryUncheckedCreateWithoutRouteInput = {
@@ -519,6 +661,12 @@ export type DeliveryUncheckedCreateWithoutRouteInput = {
   status?: $Enums.DeliveryStatus
   customerName: string
   sequenceOrder?: number
+  verificationPin?: string | null
+  signature?: string | null
+  notes?: string | null
+  deliveredAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type DeliveryCreateOrConnectWithoutRouteInput = {
@@ -559,6 +707,12 @@ export type DeliveryScalarWhereInput = {
   customerName?: Prisma.StringFilter<"Delivery"> | string
   routeId?: Prisma.StringNullableFilter<"Delivery"> | string | null
   sequenceOrder?: Prisma.IntFilter<"Delivery"> | number
+  verificationPin?: Prisma.StringNullableFilter<"Delivery"> | string | null
+  signature?: Prisma.StringNullableFilter<"Delivery"> | string | null
+  notes?: Prisma.StringNullableFilter<"Delivery"> | string | null
+  deliveredAt?: Prisma.DateTimeNullableFilter<"Delivery"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"Delivery"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Delivery"> | Date | string
 }
 
 export type DeliveryCreateManyRouteInput = {
@@ -569,6 +723,12 @@ export type DeliveryCreateManyRouteInput = {
   status?: $Enums.DeliveryStatus
   customerName: string
   sequenceOrder?: number
+  verificationPin?: string | null
+  signature?: string | null
+  notes?: string | null
+  deliveredAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type DeliveryUpdateWithoutRouteInput = {
@@ -579,6 +739,12 @@ export type DeliveryUpdateWithoutRouteInput = {
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  verificationPin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DeliveryUncheckedUpdateWithoutRouteInput = {
@@ -589,6 +755,12 @@ export type DeliveryUncheckedUpdateWithoutRouteInput = {
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  verificationPin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DeliveryUncheckedUpdateManyWithoutRouteInput = {
@@ -599,6 +771,12 @@ export type DeliveryUncheckedUpdateManyWithoutRouteInput = {
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  verificationPin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -612,6 +790,12 @@ export type DeliverySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   customerName?: boolean
   routeId?: boolean
   sequenceOrder?: boolean
+  verificationPin?: boolean
+  signature?: boolean
+  notes?: boolean
+  deliveredAt?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   route?: boolean | Prisma.Delivery$routeArgs<ExtArgs>
 }, ExtArgs["result"]["delivery"]>
 
@@ -624,6 +808,12 @@ export type DeliverySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   customerName?: boolean
   routeId?: boolean
   sequenceOrder?: boolean
+  verificationPin?: boolean
+  signature?: boolean
+  notes?: boolean
+  deliveredAt?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   route?: boolean | Prisma.Delivery$routeArgs<ExtArgs>
 }, ExtArgs["result"]["delivery"]>
 
@@ -636,6 +826,12 @@ export type DeliverySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   customerName?: boolean
   routeId?: boolean
   sequenceOrder?: boolean
+  verificationPin?: boolean
+  signature?: boolean
+  notes?: boolean
+  deliveredAt?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   route?: boolean | Prisma.Delivery$routeArgs<ExtArgs>
 }, ExtArgs["result"]["delivery"]>
 
@@ -648,9 +844,15 @@ export type DeliverySelectScalar = {
   customerName?: boolean
   routeId?: boolean
   sequenceOrder?: boolean
+  verificationPin?: boolean
+  signature?: boolean
+  notes?: boolean
+  deliveredAt?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type DeliveryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "address" | "latitude" | "longitude" | "status" | "customerName" | "routeId" | "sequenceOrder", ExtArgs["result"]["delivery"]>
+export type DeliveryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "address" | "latitude" | "longitude" | "status" | "customerName" | "routeId" | "sequenceOrder" | "verificationPin" | "signature" | "notes" | "deliveredAt" | "createdAt" | "updatedAt", ExtArgs["result"]["delivery"]>
 export type DeliveryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   route?: boolean | Prisma.Delivery$routeArgs<ExtArgs>
 }
@@ -675,6 +877,12 @@ export type $DeliveryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     customerName: string
     routeId: string | null
     sequenceOrder: number
+    verificationPin: string | null
+    signature: string | null
+    notes: string | null
+    deliveredAt: Date | null
+    createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["delivery"]>
   composites: {}
 }
@@ -1107,6 +1315,12 @@ export interface DeliveryFieldRefs {
   readonly customerName: Prisma.FieldRef<"Delivery", 'String'>
   readonly routeId: Prisma.FieldRef<"Delivery", 'String'>
   readonly sequenceOrder: Prisma.FieldRef<"Delivery", 'Int'>
+  readonly verificationPin: Prisma.FieldRef<"Delivery", 'String'>
+  readonly signature: Prisma.FieldRef<"Delivery", 'String'>
+  readonly notes: Prisma.FieldRef<"Delivery", 'String'>
+  readonly deliveredAt: Prisma.FieldRef<"Delivery", 'DateTime'>
+  readonly createdAt: Prisma.FieldRef<"Delivery", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Delivery", 'DateTime'>
 }
     
 
