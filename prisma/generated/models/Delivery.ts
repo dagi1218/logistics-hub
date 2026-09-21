@@ -45,6 +45,7 @@ export type DeliveryMinAggregateOutputType = {
   longitude: number | null
   status: $Enums.DeliveryStatus | null
   customerName: string | null
+  trackingNumber: string | null
   routeId: string | null
   sequenceOrder: number | null
   verificationPin: string | null
@@ -62,6 +63,7 @@ export type DeliveryMaxAggregateOutputType = {
   longitude: number | null
   status: $Enums.DeliveryStatus | null
   customerName: string | null
+  trackingNumber: string | null
   routeId: string | null
   sequenceOrder: number | null
   verificationPin: string | null
@@ -79,6 +81,7 @@ export type DeliveryCountAggregateOutputType = {
   longitude: number
   status: number
   customerName: number
+  trackingNumber: number
   routeId: number
   sequenceOrder: number
   verificationPin: number
@@ -110,6 +113,7 @@ export type DeliveryMinAggregateInputType = {
   longitude?: true
   status?: true
   customerName?: true
+  trackingNumber?: true
   routeId?: true
   sequenceOrder?: true
   verificationPin?: true
@@ -127,6 +131,7 @@ export type DeliveryMaxAggregateInputType = {
   longitude?: true
   status?: true
   customerName?: true
+  trackingNumber?: true
   routeId?: true
   sequenceOrder?: true
   verificationPin?: true
@@ -144,6 +149,7 @@ export type DeliveryCountAggregateInputType = {
   longitude?: true
   status?: true
   customerName?: true
+  trackingNumber?: true
   routeId?: true
   sequenceOrder?: true
   verificationPin?: true
@@ -248,6 +254,7 @@ export type DeliveryGroupByOutputType = {
   longitude: number
   status: $Enums.DeliveryStatus
   customerName: string
+  trackingNumber: string | null
   routeId: string | null
   sequenceOrder: number
   verificationPin: string | null
@@ -288,6 +295,7 @@ export type DeliveryWhereInput = {
   longitude?: Prisma.FloatFilter<"Delivery"> | number
   status?: Prisma.EnumDeliveryStatusFilter<"Delivery"> | $Enums.DeliveryStatus
   customerName?: Prisma.StringFilter<"Delivery"> | string
+  trackingNumber?: Prisma.StringNullableFilter<"Delivery"> | string | null
   routeId?: Prisma.StringNullableFilter<"Delivery"> | string | null
   sequenceOrder?: Prisma.IntFilter<"Delivery"> | number
   verificationPin?: Prisma.StringNullableFilter<"Delivery"> | string | null
@@ -306,6 +314,7 @@ export type DeliveryOrderByWithRelationInput = {
   longitude?: Prisma.SortOrder
   status?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
+  trackingNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   routeId?: Prisma.SortOrderInput | Prisma.SortOrder
   sequenceOrder?: Prisma.SortOrder
   verificationPin?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -319,6 +328,7 @@ export type DeliveryOrderByWithRelationInput = {
 
 export type DeliveryWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  trackingNumber?: string
   AND?: Prisma.DeliveryWhereInput | Prisma.DeliveryWhereInput[]
   OR?: Prisma.DeliveryWhereInput[]
   NOT?: Prisma.DeliveryWhereInput | Prisma.DeliveryWhereInput[]
@@ -336,7 +346,7 @@ export type DeliveryWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Delivery"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Delivery"> | Date | string
   route?: Prisma.XOR<Prisma.RouteNullableScalarRelationFilter, Prisma.RouteWhereInput> | null
-}, "id">
+}, "id" | "trackingNumber">
 
 export type DeliveryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -345,6 +355,7 @@ export type DeliveryOrderByWithAggregationInput = {
   longitude?: Prisma.SortOrder
   status?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
+  trackingNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   routeId?: Prisma.SortOrderInput | Prisma.SortOrder
   sequenceOrder?: Prisma.SortOrder
   verificationPin?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -370,6 +381,7 @@ export type DeliveryScalarWhereWithAggregatesInput = {
   longitude?: Prisma.FloatWithAggregatesFilter<"Delivery"> | number
   status?: Prisma.EnumDeliveryStatusWithAggregatesFilter<"Delivery"> | $Enums.DeliveryStatus
   customerName?: Prisma.StringWithAggregatesFilter<"Delivery"> | string
+  trackingNumber?: Prisma.StringNullableWithAggregatesFilter<"Delivery"> | string | null
   routeId?: Prisma.StringNullableWithAggregatesFilter<"Delivery"> | string | null
   sequenceOrder?: Prisma.IntWithAggregatesFilter<"Delivery"> | number
   verificationPin?: Prisma.StringNullableWithAggregatesFilter<"Delivery"> | string | null
@@ -387,6 +399,7 @@ export type DeliveryCreateInput = {
   longitude: number
   status?: $Enums.DeliveryStatus
   customerName: string
+  trackingNumber?: string | null
   sequenceOrder?: number
   verificationPin?: string | null
   signature?: string | null
@@ -404,6 +417,7 @@ export type DeliveryUncheckedCreateInput = {
   longitude: number
   status?: $Enums.DeliveryStatus
   customerName: string
+  trackingNumber?: string | null
   routeId?: string | null
   sequenceOrder?: number
   verificationPin?: string | null
@@ -421,6 +435,7 @@ export type DeliveryUpdateInput = {
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
   verificationPin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -438,6 +453,7 @@ export type DeliveryUncheckedUpdateInput = {
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
   verificationPin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -455,6 +471,7 @@ export type DeliveryCreateManyInput = {
   longitude: number
   status?: $Enums.DeliveryStatus
   customerName: string
+  trackingNumber?: string | null
   routeId?: string | null
   sequenceOrder?: number
   verificationPin?: string | null
@@ -472,6 +489,7 @@ export type DeliveryUpdateManyMutationInput = {
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
   verificationPin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -488,6 +506,7 @@ export type DeliveryUncheckedUpdateManyInput = {
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
   verificationPin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -515,6 +534,7 @@ export type DeliveryCountOrderByAggregateInput = {
   longitude?: Prisma.SortOrder
   status?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
+  trackingNumber?: Prisma.SortOrder
   routeId?: Prisma.SortOrder
   sequenceOrder?: Prisma.SortOrder
   verificationPin?: Prisma.SortOrder
@@ -538,6 +558,7 @@ export type DeliveryMaxOrderByAggregateInput = {
   longitude?: Prisma.SortOrder
   status?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
+  trackingNumber?: Prisma.SortOrder
   routeId?: Prisma.SortOrder
   sequenceOrder?: Prisma.SortOrder
   verificationPin?: Prisma.SortOrder
@@ -555,6 +576,7 @@ export type DeliveryMinOrderByAggregateInput = {
   longitude?: Prisma.SortOrder
   status?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
+  trackingNumber?: Prisma.SortOrder
   routeId?: Prisma.SortOrder
   sequenceOrder?: Prisma.SortOrder
   verificationPin?: Prisma.SortOrder
@@ -644,6 +666,7 @@ export type DeliveryCreateWithoutRouteInput = {
   longitude: number
   status?: $Enums.DeliveryStatus
   customerName: string
+  trackingNumber?: string | null
   sequenceOrder?: number
   verificationPin?: string | null
   signature?: string | null
@@ -660,6 +683,7 @@ export type DeliveryUncheckedCreateWithoutRouteInput = {
   longitude: number
   status?: $Enums.DeliveryStatus
   customerName: string
+  trackingNumber?: string | null
   sequenceOrder?: number
   verificationPin?: string | null
   signature?: string | null
@@ -705,6 +729,7 @@ export type DeliveryScalarWhereInput = {
   longitude?: Prisma.FloatFilter<"Delivery"> | number
   status?: Prisma.EnumDeliveryStatusFilter<"Delivery"> | $Enums.DeliveryStatus
   customerName?: Prisma.StringFilter<"Delivery"> | string
+  trackingNumber?: Prisma.StringNullableFilter<"Delivery"> | string | null
   routeId?: Prisma.StringNullableFilter<"Delivery"> | string | null
   sequenceOrder?: Prisma.IntFilter<"Delivery"> | number
   verificationPin?: Prisma.StringNullableFilter<"Delivery"> | string | null
@@ -722,6 +747,7 @@ export type DeliveryCreateManyRouteInput = {
   longitude: number
   status?: $Enums.DeliveryStatus
   customerName: string
+  trackingNumber?: string | null
   sequenceOrder?: number
   verificationPin?: string | null
   signature?: string | null
@@ -738,6 +764,7 @@ export type DeliveryUpdateWithoutRouteInput = {
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
   verificationPin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -754,6 +781,7 @@ export type DeliveryUncheckedUpdateWithoutRouteInput = {
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
   verificationPin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -770,6 +798,7 @@ export type DeliveryUncheckedUpdateManyWithoutRouteInput = {
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  trackingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sequenceOrder?: Prisma.IntFieldUpdateOperationsInput | number
   verificationPin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -788,6 +817,7 @@ export type DeliverySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   longitude?: boolean
   status?: boolean
   customerName?: boolean
+  trackingNumber?: boolean
   routeId?: boolean
   sequenceOrder?: boolean
   verificationPin?: boolean
@@ -806,6 +836,7 @@ export type DeliverySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   longitude?: boolean
   status?: boolean
   customerName?: boolean
+  trackingNumber?: boolean
   routeId?: boolean
   sequenceOrder?: boolean
   verificationPin?: boolean
@@ -824,6 +855,7 @@ export type DeliverySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   longitude?: boolean
   status?: boolean
   customerName?: boolean
+  trackingNumber?: boolean
   routeId?: boolean
   sequenceOrder?: boolean
   verificationPin?: boolean
@@ -842,6 +874,7 @@ export type DeliverySelectScalar = {
   longitude?: boolean
   status?: boolean
   customerName?: boolean
+  trackingNumber?: boolean
   routeId?: boolean
   sequenceOrder?: boolean
   verificationPin?: boolean
@@ -852,7 +885,7 @@ export type DeliverySelectScalar = {
   updatedAt?: boolean
 }
 
-export type DeliveryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "address" | "latitude" | "longitude" | "status" | "customerName" | "routeId" | "sequenceOrder" | "verificationPin" | "signature" | "notes" | "deliveredAt" | "createdAt" | "updatedAt", ExtArgs["result"]["delivery"]>
+export type DeliveryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "address" | "latitude" | "longitude" | "status" | "customerName" | "trackingNumber" | "routeId" | "sequenceOrder" | "verificationPin" | "signature" | "notes" | "deliveredAt" | "createdAt" | "updatedAt", ExtArgs["result"]["delivery"]>
 export type DeliveryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   route?: boolean | Prisma.Delivery$routeArgs<ExtArgs>
 }
@@ -875,6 +908,7 @@ export type $DeliveryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     longitude: number
     status: $Enums.DeliveryStatus
     customerName: string
+    trackingNumber: string | null
     routeId: string | null
     sequenceOrder: number
     verificationPin: string | null
@@ -1313,6 +1347,7 @@ export interface DeliveryFieldRefs {
   readonly longitude: Prisma.FieldRef<"Delivery", 'Float'>
   readonly status: Prisma.FieldRef<"Delivery", 'DeliveryStatus'>
   readonly customerName: Prisma.FieldRef<"Delivery", 'String'>
+  readonly trackingNumber: Prisma.FieldRef<"Delivery", 'String'>
   readonly routeId: Prisma.FieldRef<"Delivery", 'String'>
   readonly sequenceOrder: Prisma.FieldRef<"Delivery", 'Int'>
   readonly verificationPin: Prisma.FieldRef<"Delivery", 'String'>

@@ -50,72 +50,101 @@ export async function assignVehicleToDriver(driverId: string, vehicleId: string 
 }
 
 
-export async function createRouteWithDeliveries(driverId: string,deliveryIds: string[]) {
-      const newRoute = await prisma.route.create({
+export async function createRouteWithDeliveries(driverId: string, deliveryIds: string[]) {
+  const newRoute = await prisma.route.create({
+    data: {
+      driverId,
+      isCompleted: false,
+    }
+  });
+
+  await Promise.all(
+    deliveryIds.map((deliveryId, index) =>
+      prisma.delivery.update({
+        where: { id: deliveryId },
         data: {
-          driverId,
-          isCompleted: false,
-        }
-      });
+          routeId: newRoute.id,
+          sequenceOrder: index + 1,
+        },
+      })
+    )
+  );
 
-      await Promise.all(
-          deliveryIds.map((deliveryId,index) =>
-              prisma.delivery.update({
-                  where: { id: deliveryId },
-                  data: {
-                    routeId: newRoute.id,
-                    sequenceOrder: index + 1,
-                  },
-              })
-      )
-    );
-
-    revalidatePath("/dispatcher/map");
-    revalidatePath("/dispatcher/deliveries");
+  revalidatePath("/dispatcher/map");
+  revalidatePath("/dispatcher/deliveries");
 }
 
 
-export async function assignDeliveriesToDriver(driverId:string,deliveryIds:string[]){
-           if(!driverId|| deliveryIds.length===0){
-                return {success:false,message:"Select a driver and at least one delivery to assign."};
-           }
+export async function assignDeliveriesToDriver(driverId: string, deliveryIds: string[]) {
+  if (!driverId || deliveryIds.length === 0) {
+    return { success: false, message: "Select a driver and at least one delivery to assign." };
+  }
 
-           try{
-             let activeRoute=await prisma.route.findFirst({
-                  where:{driverId:driverId,isCompleted:false},
-                  include:{deliveries:true}
-             });
+  try {
+    let activeRoute = await prisma.route.findFirst({
+      where: { driverId: driverId, isCompleted: false },
+      include: { deliveries: true }
+    });
 
-             if(!activeRoute){
-                activeRoute=await prisma.route.create({
-                    data:{driverId:driverId,isCompleted:false},
-                    include:{deliveries:true}
-                });
-             }
+    if (!activeRoute) {
+      activeRoute = await prisma.route.create({
+        data: { driverId: driverId, isCompleted: false },
+        include: { deliveries: true }
+      });
+    }
 
-             const currentStopCount = activeRoute.deliveries.length;
-              
-             const updatePromises = deliveryIds.map((deliveryId,index) =>
-                 prisma.delivery.update({
-                    where:{id:deliveryId},
-                    data:{
-                        routeId: activeRoute.id,
-                        sequenceOrder: currentStopCount + index + 1,
-                 }}
-                )
-            );
+    const currentStopCount = activeRoute.deliveries.length;
 
-            await prisma.$transaction(updatePromises);
+    const updatePromises = deliveryIds.map((deliveryId, index) =>
+      prisma.delivery.update({
+        where: { id: deliveryId },
+        data: {
+          routeId: activeRoute.id,
+          sequenceOrder: currentStopCount + index + 1,
+        }
+      }
+      )
+    );
 
-            revalidatePath("/dispatcher/map");
-            revalidatePath("/dispatcher/deliveries");
-            return {success:true};
-            
-             }catch(error){
-                console.error("Assignment error: ",error);
-                return { success: false, error: "Failed to dispatch route." };
-             }
-           }
+    await prisma.$transaction(updatePromises);
+
+    revalidatePath("/dispatcher/map");
+    revalidatePath("/dispatcher/deliveries");
+    return { success: true };
+
+  } catch (error) {
+    console.error("Assignment error: ", error);
+    return { success: false, error: "Failed to dispatch route." };
+  }
+}
+
+
+
+//reorder-route-Stops ,
+
+export async function reorderRouteStops(
+  orderedDeliveryIds: string[],
+ 
+  driverId?: string,
+
+) {
+  try {
+    await prisma.$transaction(
+      orderedDeliveryIds.map((deliveryId, index) =>
+        prisma.delivery.update({
+          where: { id: deliveryId },
+          data: { sequenceOrder: index + 1 }
+        })
+      )
+    )
+    revalidatePath(`/dispatcher/map`);
+    revalidatePath(`/driver/${driverId}`)
+    return { success: true };
+  } catch (e) {
+    console.error("Reorder error: ", e);
+    return { success: false, error: "Failed to reorder route." }
+  }
+}
 
 
 

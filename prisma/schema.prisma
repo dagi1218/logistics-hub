@@ -49,6 +49,7 @@ model Delivery {
   longitude       Float
   status          DeliveryStatus @default(PENDING)
   customerName    String
+  trackingNumber  String?  @unique @default(cuid())
   routeId         String?
   sequenceOrder   Int            @default(0)
   verificationPin String?

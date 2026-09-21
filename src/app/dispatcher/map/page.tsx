@@ -6,6 +6,8 @@ import OptimizeRouteButton from "@/components/map/OptimizeRouteButton";
 import UnassignedDeliveriesSidebar from "@/components/modals/UnassignedDeliveriesSidebar";
 import { getRoadPath } from "@/lib/routing";
 import LiveTracker from "@/components/map/LiveTracker";
+import RouteCardControls from "@/components/map/RouteCardControls";
+
 
 export default async function MapDashboardPage() {
   // 1. Fetch active routes
@@ -43,12 +45,14 @@ export default async function MapDashboardPage() {
     const strokeColor = routeColors[index % routeColors.length];
 
     const deliveriesData = route.deliveries.map((delivery) => ({
-      id: delivery.id,
-      customerName: delivery.customerName,
-      address: delivery.address,
-      latitude: delivery.latitude,
-      longitude: delivery.longitude,
-      status: delivery.status,
+       id: delivery.id,
+                  customerName: delivery.customerName,
+                  address: delivery.address,
+                  latitude: delivery.latitude,
+                  longitude: delivery.longitude,
+                  status: delivery.status,
+                  sequenceOrder: delivery.sequenceOrder,
+                  trackingNumber: delivery.trackingNumber,
     }));
 
     const roadPath = await getRoadPath(deliveriesData);
@@ -68,7 +72,8 @@ export default async function MapDashboardPage() {
 
   return (
     <div className="space-y-6">
-      <LiveTracker intervalMs={2000} />
+
+      {/* <LiveTracker intervalMs={2000} /> */}
 
       <div className="flex items-center justify-between">
         <div>
@@ -104,7 +109,26 @@ export default async function MapDashboardPage() {
                   <p className="text-xs text-zinc-500">{route.deliveries.length} drops</p>
                 </div>
               </div>
-              <OptimizeRouteButton routeId={route.id} />
+              <RouteCardControls
+                driverId={route.driverId}
+                driverName={route.driverName}
+                stops={route.deliveries.map((delivery) => ({
+
+                  id: delivery.id,
+                  customerName: delivery.customerName,
+                  address: delivery.address,
+                  latitude: delivery.latitude,
+                  longitude: delivery.longitude,
+                  status: delivery.status,
+                  sequenceOrder: delivery.sequenceOrder,
+                  trackingNumber: delivery.trackingNumber,
+
+
+                }))}
+
+                routeId={route.id}
+              />
+
             </div>
           </div>
         ))}
